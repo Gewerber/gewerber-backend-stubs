@@ -1,0 +1,17 @@
+class: Plan
+table: commercial_plan
+fields:
+  code: String, unique
+  tier: PlanTier
+  name: String
+  currency: String, default="eur"
+  priceMonthlyMinor: int, default=0
+  priceAnnualMinor: int, default=0
+  paypalProductId: String?
+  paypalPlanIdMonthly: String?
+  paypalPlanIdAnnual: String?
+  features: List<String>
+  isActive: bool, default=true
+  sortOrder: int, default=0
+  createdAt: DateTime, default=now
+  updatedAt: DateTime, default=now

@@ -1,4 +1,8 @@
 commercial:
   - status:
+plan:
+  - list:
+subscription:
+  - getMy:
 waitlist:
   - join:

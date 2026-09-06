@@ -11,13 +11,46 @@
 // ignore_for_file: dead_code, no_leading_underscores_for_library_prefixes
 // ignore_for_file: unnecessary_type_check
 
+import 'package:gewerber_backend_commercial_client/src/protocol/modules/subscription/models/plan_view.dart'
+    as _i24e87mh;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'modules/subscription/models/paypal_event.dart' as _ir6pdw60;
+import 'modules/subscription/models/paypal_event_status.dart' as _i4aqbmlv;
+import 'modules/subscription/models/plan.dart' as _irkd04k7;
+import 'modules/subscription/models/plan_tier.dart' as _ikntdgs7;
+import 'modules/subscription/models/plan_view.dart' as _imc45n2d;
+import 'modules/subscription/models/promo_code.dart' as _iaze9zpn;
+import 'modules/subscription/models/promo_code_kind.dart' as _id17p754;
+import 'modules/subscription/models/promo_code_status.dart' as _ixlfonrj;
+import 'modules/subscription/models/promo_discount_type.dart' as _irieie3z;
+import 'modules/subscription/models/promo_redemption.dart' as _i9ebshft;
+import 'modules/subscription/models/subscription.dart' as _i6saukvy;
+import 'modules/subscription/models/subscription_billing_cycle.dart'
+    as _i3cgokeq;
+import 'modules/subscription/models/subscription_exception.dart' as _i5tjfyub;
+import 'modules/subscription/models/subscription_status.dart' as _idbm4hmy;
+import 'modules/subscription/models/subscription_view.dart' as _ijjhcz6r;
 import 'modules/waitlist/models/join_waitlist_request.dart' as _igv3k488;
 import 'modules/waitlist/models/waitlist_entry.dart' as _igdqkb2n;
 import 'modules/waitlist/models/waitlist_exception.dart' as _ibplyxx4;
 import 'modules/waitlist/models/waitlist_locale.dart' as _i4uj41vo;
 import 'modules/waitlist/models/waitlist_source.dart' as _i18l67d9;
 import 'modules/waitlist/models/waitlist_status.dart' as _ivebcceg;
+export 'modules/subscription/models/paypal_event.dart';
+export 'modules/subscription/models/paypal_event_status.dart';
+export 'modules/subscription/models/plan.dart';
+export 'modules/subscription/models/plan_tier.dart';
+export 'modules/subscription/models/plan_view.dart';
+export 'modules/subscription/models/promo_code.dart';
+export 'modules/subscription/models/promo_code_kind.dart';
+export 'modules/subscription/models/promo_code_status.dart';
+export 'modules/subscription/models/promo_discount_type.dart';
+export 'modules/subscription/models/promo_redemption.dart';
+export 'modules/subscription/models/subscription.dart';
+export 'modules/subscription/models/subscription_billing_cycle.dart';
+export 'modules/subscription/models/subscription_exception.dart';
+export 'modules/subscription/models/subscription_status.dart';
+export 'modules/subscription/models/subscription_view.dart';
 export 'modules/waitlist/models/join_waitlist_request.dart';
 export 'modules/waitlist/models/waitlist_entry.dart';
 export 'modules/waitlist/models/waitlist_exception.dart';
@@ -71,6 +104,51 @@ class Protocol extends _isc.SerializationManager {
       }
     }
 
+    if (t == _ir6pdw60.PaypalEvent) {
+      return _ir6pdw60.PaypalEvent.fromJson(data) as T;
+    }
+    if (t == _i4aqbmlv.PaypalEventStatus) {
+      return _i4aqbmlv.PaypalEventStatus.fromJson(data) as T;
+    }
+    if (t == _irkd04k7.Plan) {
+      return _irkd04k7.Plan.fromJson(data) as T;
+    }
+    if (t == _ikntdgs7.PlanTier) {
+      return _ikntdgs7.PlanTier.fromJson(data) as T;
+    }
+    if (t == _imc45n2d.PlanView) {
+      return _imc45n2d.PlanView.fromJson(data) as T;
+    }
+    if (t == _iaze9zpn.PromoCode) {
+      return _iaze9zpn.PromoCode.fromJson(data) as T;
+    }
+    if (t == _id17p754.PromoCodeKind) {
+      return _id17p754.PromoCodeKind.fromJson(data) as T;
+    }
+    if (t == _ixlfonrj.PromoCodeStatus) {
+      return _ixlfonrj.PromoCodeStatus.fromJson(data) as T;
+    }
+    if (t == _irieie3z.PromoDiscountType) {
+      return _irieie3z.PromoDiscountType.fromJson(data) as T;
+    }
+    if (t == _i9ebshft.PromoRedemption) {
+      return _i9ebshft.PromoRedemption.fromJson(data) as T;
+    }
+    if (t == _i6saukvy.Subscription) {
+      return _i6saukvy.Subscription.fromJson(data) as T;
+    }
+    if (t == _i3cgokeq.SubscriptionBillingCycle) {
+      return _i3cgokeq.SubscriptionBillingCycle.fromJson(data) as T;
+    }
+    if (t == _i5tjfyub.SubscriptionException) {
+      return _i5tjfyub.SubscriptionException.fromJson(data) as T;
+    }
+    if (t == _idbm4hmy.SubscriptionStatus) {
+      return _idbm4hmy.SubscriptionStatus.fromJson(data) as T;
+    }
+    if (t == _ijjhcz6r.SubscriptionView) {
+      return _ijjhcz6r.SubscriptionView.fromJson(data) as T;
+    }
     if (t == _igv3k488.JoinWaitlistRequest) {
       return _igv3k488.JoinWaitlistRequest.fromJson(data) as T;
     }
@@ -88,6 +166,64 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == _ivebcceg.WaitlistStatus) {
       return _ivebcceg.WaitlistStatus.fromJson(data) as T;
+    }
+    if (t == _isc.getType<_ir6pdw60.PaypalEvent?>()) {
+      return (data != null ? _ir6pdw60.PaypalEvent.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i4aqbmlv.PaypalEventStatus?>()) {
+      return (data != null ? _i4aqbmlv.PaypalEventStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_irkd04k7.Plan?>()) {
+      return (data != null ? _irkd04k7.Plan.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_ikntdgs7.PlanTier?>()) {
+      return (data != null ? _ikntdgs7.PlanTier.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_imc45n2d.PlanView?>()) {
+      return (data != null ? _imc45n2d.PlanView.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iaze9zpn.PromoCode?>()) {
+      return (data != null ? _iaze9zpn.PromoCode.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_id17p754.PromoCodeKind?>()) {
+      return (data != null ? _id17p754.PromoCodeKind.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ixlfonrj.PromoCodeStatus?>()) {
+      return (data != null ? _ixlfonrj.PromoCodeStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_irieie3z.PromoDiscountType?>()) {
+      return (data != null ? _irieie3z.PromoDiscountType.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i9ebshft.PromoRedemption?>()) {
+      return (data != null ? _i9ebshft.PromoRedemption.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i6saukvy.Subscription?>()) {
+      return (data != null ? _i6saukvy.Subscription.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_i3cgokeq.SubscriptionBillingCycle?>()) {
+      return (data != null
+              ? _i3cgokeq.SubscriptionBillingCycle.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i5tjfyub.SubscriptionException?>()) {
+      return (data != null
+              ? _i5tjfyub.SubscriptionException.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_idbm4hmy.SubscriptionStatus?>()) {
+      return (data != null ? _idbm4hmy.SubscriptionStatus.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ijjhcz6r.SubscriptionView?>()) {
+      return (data != null ? _ijjhcz6r.SubscriptionView.fromJson(data) : null)
+          as T;
     }
     if (t == _isc.getType<_igv3k488.JoinWaitlistRequest?>()) {
       return (data != null
@@ -115,11 +251,35 @@ class Protocol extends _isc.SerializationManager {
       return (data != null ? _ivebcceg.WaitlistStatus.fromJson(data) : null)
           as T;
     }
+    if (t == List<String>) {
+      return (data as List).map((e) => deserialize<String>(e)).toList() as T;
+    }
+    if (t == List<_i24e87mh.PlanView>) {
+      return (data as List)
+              .map((e) => deserialize<_i24e87mh.PlanView>(e))
+              .toList()
+          as T;
+    }
     return super.deserialize<T>(data, t);
   }
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _ir6pdw60.PaypalEvent => 'PaypalEvent',
+      _i4aqbmlv.PaypalEventStatus => 'PaypalEventStatus',
+      _irkd04k7.Plan => 'Plan',
+      _ikntdgs7.PlanTier => 'PlanTier',
+      _imc45n2d.PlanView => 'PlanView',
+      _iaze9zpn.PromoCode => 'PromoCode',
+      _id17p754.PromoCodeKind => 'PromoCodeKind',
+      _ixlfonrj.PromoCodeStatus => 'PromoCodeStatus',
+      _irieie3z.PromoDiscountType => 'PromoDiscountType',
+      _i9ebshft.PromoRedemption => 'PromoRedemption',
+      _i6saukvy.Subscription => 'Subscription',
+      _i3cgokeq.SubscriptionBillingCycle => 'SubscriptionBillingCycle',
+      _i5tjfyub.SubscriptionException => 'SubscriptionException',
+      _idbm4hmy.SubscriptionStatus => 'SubscriptionStatus',
+      _ijjhcz6r.SubscriptionView => 'SubscriptionView',
       _igv3k488.JoinWaitlistRequest => 'JoinWaitlistRequest',
       _igdqkb2n.WaitlistEntry => 'WaitlistEntry',
       _ibplyxx4.WaitlistException => 'WaitlistException',
@@ -143,6 +303,36 @@ class Protocol extends _isc.SerializationManager {
     }
 
     switch (data) {
+      case _ir6pdw60.PaypalEvent():
+        return 'PaypalEvent';
+      case _i4aqbmlv.PaypalEventStatus():
+        return 'PaypalEventStatus';
+      case _irkd04k7.Plan():
+        return 'Plan';
+      case _ikntdgs7.PlanTier():
+        return 'PlanTier';
+      case _imc45n2d.PlanView():
+        return 'PlanView';
+      case _iaze9zpn.PromoCode():
+        return 'PromoCode';
+      case _id17p754.PromoCodeKind():
+        return 'PromoCodeKind';
+      case _ixlfonrj.PromoCodeStatus():
+        return 'PromoCodeStatus';
+      case _irieie3z.PromoDiscountType():
+        return 'PromoDiscountType';
+      case _i9ebshft.PromoRedemption():
+        return 'PromoRedemption';
+      case _i6saukvy.Subscription():
+        return 'Subscription';
+      case _i3cgokeq.SubscriptionBillingCycle():
+        return 'SubscriptionBillingCycle';
+      case _i5tjfyub.SubscriptionException():
+        return 'SubscriptionException';
+      case _idbm4hmy.SubscriptionStatus():
+        return 'SubscriptionStatus';
+      case _ijjhcz6r.SubscriptionView():
+        return 'SubscriptionView';
       case _igv3k488.JoinWaitlistRequest():
         return 'JoinWaitlistRequest';
       case _igdqkb2n.WaitlistEntry():
@@ -164,6 +354,51 @@ class Protocol extends _isc.SerializationManager {
     var dataClassName = data['className'];
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
+    }
+    if (dataClassName == 'PaypalEvent') {
+      return deserialize<_ir6pdw60.PaypalEvent>(data['data']);
+    }
+    if (dataClassName == 'PaypalEventStatus') {
+      return deserialize<_i4aqbmlv.PaypalEventStatus>(data['data']);
+    }
+    if (dataClassName == 'Plan') {
+      return deserialize<_irkd04k7.Plan>(data['data']);
+    }
+    if (dataClassName == 'PlanTier') {
+      return deserialize<_ikntdgs7.PlanTier>(data['data']);
+    }
+    if (dataClassName == 'PlanView') {
+      return deserialize<_imc45n2d.PlanView>(data['data']);
+    }
+    if (dataClassName == 'PromoCode') {
+      return deserialize<_iaze9zpn.PromoCode>(data['data']);
+    }
+    if (dataClassName == 'PromoCodeKind') {
+      return deserialize<_id17p754.PromoCodeKind>(data['data']);
+    }
+    if (dataClassName == 'PromoCodeStatus') {
+      return deserialize<_ixlfonrj.PromoCodeStatus>(data['data']);
+    }
+    if (dataClassName == 'PromoDiscountType') {
+      return deserialize<_irieie3z.PromoDiscountType>(data['data']);
+    }
+    if (dataClassName == 'PromoRedemption') {
+      return deserialize<_i9ebshft.PromoRedemption>(data['data']);
+    }
+    if (dataClassName == 'Subscription') {
+      return deserialize<_i6saukvy.Subscription>(data['data']);
+    }
+    if (dataClassName == 'SubscriptionBillingCycle') {
+      return deserialize<_i3cgokeq.SubscriptionBillingCycle>(data['data']);
+    }
+    if (dataClassName == 'SubscriptionException') {
+      return deserialize<_i5tjfyub.SubscriptionException>(data['data']);
+    }
+    if (dataClassName == 'SubscriptionStatus') {
+      return deserialize<_idbm4hmy.SubscriptionStatus>(data['data']);
+    }
+    if (dataClassName == 'SubscriptionView') {
+      return deserialize<_ijjhcz6r.SubscriptionView>(data['data']);
     }
     if (dataClassName == 'JoinWaitlistRequest') {
       return deserialize<_igv3k488.JoinWaitlistRequest>(data['data']);

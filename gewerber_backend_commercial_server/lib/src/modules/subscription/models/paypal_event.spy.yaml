@@ -1,0 +1,10 @@
+class: PaypalEvent
+table: commercial_paypal_event
+fields:
+  eventId: String, unique
+  type: String
+  payload: String
+  status: PaypalEventStatus, default=received
+  processError: String?
+  receivedAt: DateTime, default=now
+  processedAt: DateTime?

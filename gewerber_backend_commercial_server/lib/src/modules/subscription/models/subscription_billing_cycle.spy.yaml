@@ -1,0 +1,5 @@
+enum: SubscriptionBillingCycle
+serialized: byName
+values:
+  - monthly
+  - annual
