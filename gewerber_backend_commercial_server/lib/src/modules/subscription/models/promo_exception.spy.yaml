@@ -1,0 +1,18 @@
+### Raised when a promo code cannot be validated or redeemed.
+###
+### The `reason` field carries a machine-readable failure code, one of:
+### `badFormat` (the submitted string is not a well-formed code),
+### `notFound` (no promo code row matches),
+### `invalid` (the code exists but is not redeemable in its current state),
+### `expired` (the validity window does not include "now"),
+### `exhausted` (the global redemption cap is reached, or a trial was
+### already used / a paid subscription is active),
+### `alreadyRedeemed` (this user has redeemed the code before),
+### `notAuthenticated` (the caller must be signed in to redeem).
+exception: PromoException
+fields:
+  message: String
+  field: String?
+  ### Machine-readable failure reason: badFormat / notFound / invalid /
+  ### expired / exhausted / alreadyRedeemed / notAuthenticated.
+  reason: String?

@@ -1,0 +1,48 @@
+### One promo code row as seen by the administration API
+### (`adminSubscription.codesList` / `codesCreate` / `codesSetStatus`).
+###
+### Mirrors the `commercial_promo_code` row with the internal `planId`
+### replaced by the human-readable `planCode` and the aggregate
+### `redemptionCount` added.
+class: AdminPromoCodeView
+fields:
+  ### Database id of the promo code row.
+  id: int
+  ### Normalized (lowercase) code string.
+  code: String
+  ### What the code grants.
+  kind: PromoCodeKind
+  ### Lifecycle status of the code.
+  status: PromoCodeStatus
+  ### How the discount is expressed (discount codes only).
+  discountType: PromoDiscountType?
+  ### Percent discount (discount codes with `percent` type).
+  discountPercent: int?
+  ### Fixed discount in minor currency units (discount codes with `fixed`
+  ### type).
+  discountMinor: int?
+  ### Trial days granted (trial codes).
+  trialDays: int?
+  ### Code of the plan the row references, null when it names none.
+  planCode: String?
+  ### Global redemption cap, null when uncapped.
+  maxRedemptions: int?
+  ### Redemptions allowed per user.
+  perUserLimit: int
+  ### Start of the validity window, null when unbounded.
+  validFrom: DateTime?
+  ### End of the validity window, null when unbounded.
+  validUntil: DateTime?
+  ### Free-form campaign label for reporting.
+  campaign: String?
+  ### Free-form referral / press source label.
+  ref: String?
+  ### Internal note for operators.
+  note: String?
+  ### PayPal plan variant id used at checkout (filled by the Phase 2B
+  ### plan-sync; null until then).
+  paypalPlanVariantId: String?
+  ### When the code was created.
+  createdAt: DateTime
+  ### Total number of redemptions recorded for this code.
+  redemptionCount: int
