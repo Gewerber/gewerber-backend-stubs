@@ -1,0 +1,28 @@
+### Portfolio-wide subscription and promo metrics for the administration API
+### (`adminSubscription.subscriptionsStats`).
+class: AdminSubscriptionStats
+fields:
+  ### Subscriptions currently in their trial period.
+  trialingCount: int
+  ### Subscriptions in good standing.
+  activeCount: int
+  ### Subscriptions whose last payment attempt failed.
+  pastDueCount: int
+  ### Subscriptions canceled by the customer.
+  canceledCount: int
+  ### Subscriptions whose paid period has lapsed.
+  expiredCount: int
+  ### Live subscriptions: `trialing` + `active` + `past_due` (i.e. anything
+  ### not `canceled` or `expired`).
+  activeSubscriptions: int
+  ### Monthly recurring revenue estimate in EUR minor units: sum of
+  ### `priceMonthlyMinor` over `active` and `past_due` subscriptions;
+  ### trials contribute 0.
+  mrrEstimateMinor: int
+  ### Total number of promo-code redemptions ever recorded.
+  redemptionsTotal: int
+  ### Subscription rows grouped by plan, largest group first.
+  planCounts: List<AdminPlanCount>
+  ### Promo redemptions grouped by the campaign label of the redeemed code,
+  ### largest group first.
+  campaignCounts: List<AdminCampaignCount>

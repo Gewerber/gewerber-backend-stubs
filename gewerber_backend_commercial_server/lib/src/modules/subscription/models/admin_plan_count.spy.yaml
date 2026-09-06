@@ -1,0 +1,8 @@
+### Number of subscriptions on one plan (part of
+### `adminSubscription.subscriptionsStats`).
+class: AdminPlanCount
+fields:
+  ### Plan code (`free`, `pro`, `business`, ...).
+  planCode: String
+  ### Number of subscription rows referencing the plan.
+  count: int

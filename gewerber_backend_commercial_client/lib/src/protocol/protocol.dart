@@ -11,9 +11,23 @@
 // ignore_for_file: dead_code, no_leading_underscores_for_library_prefixes
 // ignore_for_file: unnecessary_type_check
 
+import 'package:gewerber_backend_commercial_client/src/protocol/modules/subscription/models/admin_promo_code_view.dart'
+    as _ixdh16c0;
+import 'package:gewerber_backend_commercial_client/src/protocol/modules/subscription/models/admin_subscription_view.dart'
+    as _ivfv04zu;
 import 'package:gewerber_backend_commercial_client/src/protocol/modules/subscription/models/plan_view.dart'
     as _i24e87mh;
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+import 'modules/subscription/models/admin_campaign_count.dart' as _ismu3g76;
+import 'modules/subscription/models/admin_plan_count.dart' as _i2sqtkcx;
+import 'modules/subscription/models/admin_promo_code_create_request.dart'
+    as _ifl3kjgx;
+import 'modules/subscription/models/admin_promo_code_detail.dart' as _ih4hr7y7;
+import 'modules/subscription/models/admin_promo_code_view.dart' as _ix98ax1i;
+import 'modules/subscription/models/admin_promo_redemption_row.dart'
+    as _ic013jek;
+import 'modules/subscription/models/admin_subscription_stats.dart' as _isqlh41o;
+import 'modules/subscription/models/admin_subscription_view.dart' as _i9mpzdb5;
 import 'modules/subscription/models/paypal_event.dart' as _ir6pdw60;
 import 'modules/subscription/models/paypal_event_status.dart' as _i4aqbmlv;
 import 'modules/subscription/models/plan.dart' as _irkd04k7;
@@ -23,8 +37,13 @@ import 'modules/subscription/models/promo_code.dart' as _iaze9zpn;
 import 'modules/subscription/models/promo_code_kind.dart' as _id17p754;
 import 'modules/subscription/models/promo_code_status.dart' as _ixlfonrj;
 import 'modules/subscription/models/promo_discount_type.dart' as _irieie3z;
+import 'modules/subscription/models/promo_exception.dart' as _ijwowkdq;
+import 'modules/subscription/models/promo_preview.dart' as _i7ypksxy;
 import 'modules/subscription/models/promo_redemption.dart' as _i9ebshft;
+import 'modules/subscription/models/promo_redemption_view.dart' as _ie09atwx;
 import 'modules/subscription/models/subscription.dart' as _i6saukvy;
+import 'modules/subscription/models/subscription_admin_exception.dart'
+    as _iu09j5eu;
 import 'modules/subscription/models/subscription_billing_cycle.dart'
     as _i3cgokeq;
 import 'modules/subscription/models/subscription_exception.dart' as _i5tjfyub;
@@ -36,6 +55,14 @@ import 'modules/waitlist/models/waitlist_exception.dart' as _ibplyxx4;
 import 'modules/waitlist/models/waitlist_locale.dart' as _i4uj41vo;
 import 'modules/waitlist/models/waitlist_source.dart' as _i18l67d9;
 import 'modules/waitlist/models/waitlist_status.dart' as _ivebcceg;
+export 'modules/subscription/models/admin_campaign_count.dart';
+export 'modules/subscription/models/admin_plan_count.dart';
+export 'modules/subscription/models/admin_promo_code_create_request.dart';
+export 'modules/subscription/models/admin_promo_code_detail.dart';
+export 'modules/subscription/models/admin_promo_code_view.dart';
+export 'modules/subscription/models/admin_promo_redemption_row.dart';
+export 'modules/subscription/models/admin_subscription_stats.dart';
+export 'modules/subscription/models/admin_subscription_view.dart';
 export 'modules/subscription/models/paypal_event.dart';
 export 'modules/subscription/models/paypal_event_status.dart';
 export 'modules/subscription/models/plan.dart';
@@ -45,8 +72,12 @@ export 'modules/subscription/models/promo_code.dart';
 export 'modules/subscription/models/promo_code_kind.dart';
 export 'modules/subscription/models/promo_code_status.dart';
 export 'modules/subscription/models/promo_discount_type.dart';
+export 'modules/subscription/models/promo_exception.dart';
+export 'modules/subscription/models/promo_preview.dart';
 export 'modules/subscription/models/promo_redemption.dart';
+export 'modules/subscription/models/promo_redemption_view.dart';
 export 'modules/subscription/models/subscription.dart';
+export 'modules/subscription/models/subscription_admin_exception.dart';
 export 'modules/subscription/models/subscription_billing_cycle.dart';
 export 'modules/subscription/models/subscription_exception.dart';
 export 'modules/subscription/models/subscription_status.dart';
@@ -104,6 +135,30 @@ class Protocol extends _isc.SerializationManager {
       }
     }
 
+    if (t == _ismu3g76.AdminCampaignCount) {
+      return _ismu3g76.AdminCampaignCount.fromJson(data) as T;
+    }
+    if (t == _i2sqtkcx.AdminPlanCount) {
+      return _i2sqtkcx.AdminPlanCount.fromJson(data) as T;
+    }
+    if (t == _ifl3kjgx.AdminPromoCodeCreateRequest) {
+      return _ifl3kjgx.AdminPromoCodeCreateRequest.fromJson(data) as T;
+    }
+    if (t == _ih4hr7y7.AdminPromoCodeDetail) {
+      return _ih4hr7y7.AdminPromoCodeDetail.fromJson(data) as T;
+    }
+    if (t == _ix98ax1i.AdminPromoCodeView) {
+      return _ix98ax1i.AdminPromoCodeView.fromJson(data) as T;
+    }
+    if (t == _ic013jek.AdminPromoRedemptionRow) {
+      return _ic013jek.AdminPromoRedemptionRow.fromJson(data) as T;
+    }
+    if (t == _isqlh41o.AdminSubscriptionStats) {
+      return _isqlh41o.AdminSubscriptionStats.fromJson(data) as T;
+    }
+    if (t == _i9mpzdb5.AdminSubscriptionView) {
+      return _i9mpzdb5.AdminSubscriptionView.fromJson(data) as T;
+    }
     if (t == _ir6pdw60.PaypalEvent) {
       return _ir6pdw60.PaypalEvent.fromJson(data) as T;
     }
@@ -131,11 +186,23 @@ class Protocol extends _isc.SerializationManager {
     if (t == _irieie3z.PromoDiscountType) {
       return _irieie3z.PromoDiscountType.fromJson(data) as T;
     }
+    if (t == _ijwowkdq.PromoException) {
+      return _ijwowkdq.PromoException.fromJson(data) as T;
+    }
+    if (t == _i7ypksxy.PromoPreview) {
+      return _i7ypksxy.PromoPreview.fromJson(data) as T;
+    }
     if (t == _i9ebshft.PromoRedemption) {
       return _i9ebshft.PromoRedemption.fromJson(data) as T;
     }
+    if (t == _ie09atwx.PromoRedemptionView) {
+      return _ie09atwx.PromoRedemptionView.fromJson(data) as T;
+    }
     if (t == _i6saukvy.Subscription) {
       return _i6saukvy.Subscription.fromJson(data) as T;
+    }
+    if (t == _iu09j5eu.SubscriptionAdminException) {
+      return _iu09j5eu.SubscriptionAdminException.fromJson(data) as T;
     }
     if (t == _i3cgokeq.SubscriptionBillingCycle) {
       return _i3cgokeq.SubscriptionBillingCycle.fromJson(data) as T;
@@ -166,6 +233,48 @@ class Protocol extends _isc.SerializationManager {
     }
     if (t == _ivebcceg.WaitlistStatus) {
       return _ivebcceg.WaitlistStatus.fromJson(data) as T;
+    }
+    if (t == _isc.getType<_ismu3g76.AdminCampaignCount?>()) {
+      return (data != null ? _ismu3g76.AdminCampaignCount.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i2sqtkcx.AdminPlanCount?>()) {
+      return (data != null ? _i2sqtkcx.AdminPlanCount.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ifl3kjgx.AdminPromoCodeCreateRequest?>()) {
+      return (data != null
+              ? _ifl3kjgx.AdminPromoCodeCreateRequest.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_ih4hr7y7.AdminPromoCodeDetail?>()) {
+      return (data != null
+              ? _ih4hr7y7.AdminPromoCodeDetail.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_ix98ax1i.AdminPromoCodeView?>()) {
+      return (data != null ? _ix98ax1i.AdminPromoCodeView.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_ic013jek.AdminPromoRedemptionRow?>()) {
+      return (data != null
+              ? _ic013jek.AdminPromoRedemptionRow.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_isqlh41o.AdminSubscriptionStats?>()) {
+      return (data != null
+              ? _isqlh41o.AdminSubscriptionStats.fromJson(data)
+              : null)
+          as T;
+    }
+    if (t == _isc.getType<_i9mpzdb5.AdminSubscriptionView?>()) {
+      return (data != null
+              ? _i9mpzdb5.AdminSubscriptionView.fromJson(data)
+              : null)
+          as T;
     }
     if (t == _isc.getType<_ir6pdw60.PaypalEvent?>()) {
       return (data != null ? _ir6pdw60.PaypalEvent.fromJson(data) : null) as T;
@@ -198,12 +307,31 @@ class Protocol extends _isc.SerializationManager {
       return (data != null ? _irieie3z.PromoDiscountType.fromJson(data) : null)
           as T;
     }
+    if (t == _isc.getType<_ijwowkdq.PromoException?>()) {
+      return (data != null ? _ijwowkdq.PromoException.fromJson(data) : null)
+          as T;
+    }
+    if (t == _isc.getType<_i7ypksxy.PromoPreview?>()) {
+      return (data != null ? _i7ypksxy.PromoPreview.fromJson(data) : null) as T;
+    }
     if (t == _isc.getType<_i9ebshft.PromoRedemption?>()) {
       return (data != null ? _i9ebshft.PromoRedemption.fromJson(data) : null)
           as T;
     }
+    if (t == _isc.getType<_ie09atwx.PromoRedemptionView?>()) {
+      return (data != null
+              ? _ie09atwx.PromoRedemptionView.fromJson(data)
+              : null)
+          as T;
+    }
     if (t == _isc.getType<_i6saukvy.Subscription?>()) {
       return (data != null ? _i6saukvy.Subscription.fromJson(data) : null) as T;
+    }
+    if (t == _isc.getType<_iu09j5eu.SubscriptionAdminException?>()) {
+      return (data != null
+              ? _iu09j5eu.SubscriptionAdminException.fromJson(data)
+              : null)
+          as T;
     }
     if (t == _isc.getType<_i3cgokeq.SubscriptionBillingCycle?>()) {
       return (data != null
@@ -251,8 +379,38 @@ class Protocol extends _isc.SerializationManager {
       return (data != null ? _ivebcceg.WaitlistStatus.fromJson(data) : null)
           as T;
     }
+    if (t == List<_ic013jek.AdminPromoRedemptionRow>) {
+      return (data as List)
+              .map((e) => deserialize<_ic013jek.AdminPromoRedemptionRow>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_i2sqtkcx.AdminPlanCount>) {
+      return (data as List)
+              .map((e) => deserialize<_i2sqtkcx.AdminPlanCount>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ismu3g76.AdminCampaignCount>) {
+      return (data as List)
+              .map((e) => deserialize<_ismu3g76.AdminCampaignCount>(e))
+              .toList()
+          as T;
+    }
     if (t == List<String>) {
       return (data as List).map((e) => deserialize<String>(e)).toList() as T;
+    }
+    if (t == List<_ixdh16c0.AdminPromoCodeView>) {
+      return (data as List)
+              .map((e) => deserialize<_ixdh16c0.AdminPromoCodeView>(e))
+              .toList()
+          as T;
+    }
+    if (t == List<_ivfv04zu.AdminSubscriptionView>) {
+      return (data as List)
+              .map((e) => deserialize<_ivfv04zu.AdminSubscriptionView>(e))
+              .toList()
+          as T;
     }
     if (t == List<_i24e87mh.PlanView>) {
       return (data as List)
@@ -265,6 +423,14 @@ class Protocol extends _isc.SerializationManager {
 
   static String? getClassNameForType(Type type) {
     return switch (type) {
+      _ismu3g76.AdminCampaignCount => 'AdminCampaignCount',
+      _i2sqtkcx.AdminPlanCount => 'AdminPlanCount',
+      _ifl3kjgx.AdminPromoCodeCreateRequest => 'AdminPromoCodeCreateRequest',
+      _ih4hr7y7.AdminPromoCodeDetail => 'AdminPromoCodeDetail',
+      _ix98ax1i.AdminPromoCodeView => 'AdminPromoCodeView',
+      _ic013jek.AdminPromoRedemptionRow => 'AdminPromoRedemptionRow',
+      _isqlh41o.AdminSubscriptionStats => 'AdminSubscriptionStats',
+      _i9mpzdb5.AdminSubscriptionView => 'AdminSubscriptionView',
       _ir6pdw60.PaypalEvent => 'PaypalEvent',
       _i4aqbmlv.PaypalEventStatus => 'PaypalEventStatus',
       _irkd04k7.Plan => 'Plan',
@@ -274,8 +440,12 @@ class Protocol extends _isc.SerializationManager {
       _id17p754.PromoCodeKind => 'PromoCodeKind',
       _ixlfonrj.PromoCodeStatus => 'PromoCodeStatus',
       _irieie3z.PromoDiscountType => 'PromoDiscountType',
+      _ijwowkdq.PromoException => 'PromoException',
+      _i7ypksxy.PromoPreview => 'PromoPreview',
       _i9ebshft.PromoRedemption => 'PromoRedemption',
+      _ie09atwx.PromoRedemptionView => 'PromoRedemptionView',
       _i6saukvy.Subscription => 'Subscription',
+      _iu09j5eu.SubscriptionAdminException => 'SubscriptionAdminException',
       _i3cgokeq.SubscriptionBillingCycle => 'SubscriptionBillingCycle',
       _i5tjfyub.SubscriptionException => 'SubscriptionException',
       _idbm4hmy.SubscriptionStatus => 'SubscriptionStatus',
@@ -303,6 +473,22 @@ class Protocol extends _isc.SerializationManager {
     }
 
     switch (data) {
+      case _ismu3g76.AdminCampaignCount():
+        return 'AdminCampaignCount';
+      case _i2sqtkcx.AdminPlanCount():
+        return 'AdminPlanCount';
+      case _ifl3kjgx.AdminPromoCodeCreateRequest():
+        return 'AdminPromoCodeCreateRequest';
+      case _ih4hr7y7.AdminPromoCodeDetail():
+        return 'AdminPromoCodeDetail';
+      case _ix98ax1i.AdminPromoCodeView():
+        return 'AdminPromoCodeView';
+      case _ic013jek.AdminPromoRedemptionRow():
+        return 'AdminPromoRedemptionRow';
+      case _isqlh41o.AdminSubscriptionStats():
+        return 'AdminSubscriptionStats';
+      case _i9mpzdb5.AdminSubscriptionView():
+        return 'AdminSubscriptionView';
       case _ir6pdw60.PaypalEvent():
         return 'PaypalEvent';
       case _i4aqbmlv.PaypalEventStatus():
@@ -321,10 +507,18 @@ class Protocol extends _isc.SerializationManager {
         return 'PromoCodeStatus';
       case _irieie3z.PromoDiscountType():
         return 'PromoDiscountType';
+      case _ijwowkdq.PromoException():
+        return 'PromoException';
+      case _i7ypksxy.PromoPreview():
+        return 'PromoPreview';
       case _i9ebshft.PromoRedemption():
         return 'PromoRedemption';
+      case _ie09atwx.PromoRedemptionView():
+        return 'PromoRedemptionView';
       case _i6saukvy.Subscription():
         return 'Subscription';
+      case _iu09j5eu.SubscriptionAdminException():
+        return 'SubscriptionAdminException';
       case _i3cgokeq.SubscriptionBillingCycle():
         return 'SubscriptionBillingCycle';
       case _i5tjfyub.SubscriptionException():
@@ -355,6 +549,30 @@ class Protocol extends _isc.SerializationManager {
     if (dataClassName is! String) {
       return super.deserializeByClassName(data);
     }
+    if (dataClassName == 'AdminCampaignCount') {
+      return deserialize<_ismu3g76.AdminCampaignCount>(data['data']);
+    }
+    if (dataClassName == 'AdminPlanCount') {
+      return deserialize<_i2sqtkcx.AdminPlanCount>(data['data']);
+    }
+    if (dataClassName == 'AdminPromoCodeCreateRequest') {
+      return deserialize<_ifl3kjgx.AdminPromoCodeCreateRequest>(data['data']);
+    }
+    if (dataClassName == 'AdminPromoCodeDetail') {
+      return deserialize<_ih4hr7y7.AdminPromoCodeDetail>(data['data']);
+    }
+    if (dataClassName == 'AdminPromoCodeView') {
+      return deserialize<_ix98ax1i.AdminPromoCodeView>(data['data']);
+    }
+    if (dataClassName == 'AdminPromoRedemptionRow') {
+      return deserialize<_ic013jek.AdminPromoRedemptionRow>(data['data']);
+    }
+    if (dataClassName == 'AdminSubscriptionStats') {
+      return deserialize<_isqlh41o.AdminSubscriptionStats>(data['data']);
+    }
+    if (dataClassName == 'AdminSubscriptionView') {
+      return deserialize<_i9mpzdb5.AdminSubscriptionView>(data['data']);
+    }
     if (dataClassName == 'PaypalEvent') {
       return deserialize<_ir6pdw60.PaypalEvent>(data['data']);
     }
@@ -382,11 +600,23 @@ class Protocol extends _isc.SerializationManager {
     if (dataClassName == 'PromoDiscountType') {
       return deserialize<_irieie3z.PromoDiscountType>(data['data']);
     }
+    if (dataClassName == 'PromoException') {
+      return deserialize<_ijwowkdq.PromoException>(data['data']);
+    }
+    if (dataClassName == 'PromoPreview') {
+      return deserialize<_i7ypksxy.PromoPreview>(data['data']);
+    }
     if (dataClassName == 'PromoRedemption') {
       return deserialize<_i9ebshft.PromoRedemption>(data['data']);
     }
+    if (dataClassName == 'PromoRedemptionView') {
+      return deserialize<_ie09atwx.PromoRedemptionView>(data['data']);
+    }
     if (dataClassName == 'Subscription') {
       return deserialize<_i6saukvy.Subscription>(data['data']);
+    }
+    if (dataClassName == 'SubscriptionAdminException') {
+      return deserialize<_iu09j5eu.SubscriptionAdminException>(data['data']);
     }
     if (dataClassName == 'SubscriptionBillingCycle') {
       return deserialize<_i3cgokeq.SubscriptionBillingCycle>(data['data']);

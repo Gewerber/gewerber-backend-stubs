@@ -1,8 +1,17 @@
 commercial:
   - status:
+adminSubscription:
+  - codesList:
+  - codeGet:
+  - subscriptionsStats:
+  - subscriptionGetAdmin:
+  - codesCreate:
+  - codesSetStatus:
 plan:
   - list:
 subscription:
   - getMy:
+  - validatePromo:
+  - redeemPromo:
 waitlist:
   - join:

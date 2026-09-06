@@ -1,0 +1,21 @@
+### Raised by the `adminSubscription` endpoint when an administration call
+### is rejected or an admin mutation cannot be applied.
+###
+### The `reason` field carries a machine-readable failure code, one of:
+### `notAuthenticated` (the caller must be signed in),
+### `noRole` (the caller has no entry in the `admin_user` allowlist),
+### `insufficientRole` (the caller's role does not satisfy the call),
+### `notFound` (the referenced row does not exist),
+### `duplicate` (the code is already taken),
+### `invalidStatus` / `unknownPlan` / `invalidField` (request validation).
+exception: SubscriptionAdminException
+fields:
+  message: String
+  ### The request field the failure is about (`auth`, `role`, `code`,
+  ### `status`, `planCode`, `trialDays`, `discountType`, `discountPercent`,
+  ### `discountMinor`, `maxRedemptions`, `validUntil`, `promoCodeId`, ...).
+  field: String?
+  ### Machine-readable failure reason: notAuthenticated / noRole /
+  ### insufficientRole / notFound / duplicate / invalidStatus / unknownPlan /
+  ### invalidField.
+  reason: String?
