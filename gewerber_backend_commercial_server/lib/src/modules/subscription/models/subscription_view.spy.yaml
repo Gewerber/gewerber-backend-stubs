@@ -1,0 +1,10 @@
+class: SubscriptionView
+fields:
+  status: SubscriptionStatus
+  billingCycle: SubscriptionBillingCycle
+  planCode: String
+  planName: String
+  currentPeriodStart: DateTime
+  currentPeriodEnd: DateTime
+  trialEndsAt: DateTime?
+  cancelAtPeriodEnd: bool

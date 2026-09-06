@@ -15,6 +15,9 @@ import 'package:gewerber_backend_commercial_server/src/generated/modules/waitlis
     as _iiut8fxl;
 import 'package:serverpod/serverpod.dart' as _is;
 import '../endpoints/commercial_endpoint.dart' as _iel4lhgm;
+import '../modules/subscription/endpoints/plan_endpoint.dart' as _iik5xz03;
+import '../modules/subscription/endpoints/subscription_endpoint.dart'
+    as _i3xdgbn1;
 import '../modules/waitlist/endpoints/waitlist_endpoint.dart' as _im6fuw82;
 
 class Endpoints extends _is.EndpointDispatch {
@@ -25,6 +28,18 @@ class Endpoints extends _is.EndpointDispatch {
         ..initialize(
           server,
           'commercial',
+          'gewerber_backend_commercial',
+        ),
+      'plan': _iik5xz03.PlanEndpoint()
+        ..initialize(
+          server,
+          'plan',
+          'gewerber_backend_commercial',
+        ),
+      'subscription': _i3xdgbn1.SubscriptionEndpoint()
+        ..initialize(
+          server,
+          'subscription',
           'gewerber_backend_commercial',
         ),
       'waitlist': _im6fuw82.WaitlistEndpoint()
@@ -48,6 +63,39 @@ class Endpoints extends _is.EndpointDispatch {
               ) async =>
                   (endpoints['commercial'] as _iel4lhgm.CommercialEndpoint)
                       .status(session),
+        ),
+      },
+    );
+    connectors['plan'] = _is.EndpointConnector(
+      name: 'plan',
+      endpoint: endpoints['plan']!,
+      methodConnectors: {
+        'list': _is.MethodConnector(
+          name: 'list',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['plan'] as _iik5xz03.PlanEndpoint).list(session),
+        ),
+      },
+    );
+    connectors['subscription'] = _is.EndpointConnector(
+      name: 'subscription',
+      endpoint: endpoints['subscription']!,
+      methodConnectors: {
+        'getMy': _is.MethodConnector(
+          name: 'getMy',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['subscription'] as _i3xdgbn1.SubscriptionEndpoint)
+                      .getMy(session),
         ),
       },
     );

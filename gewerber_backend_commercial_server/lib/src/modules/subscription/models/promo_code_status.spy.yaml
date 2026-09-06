@@ -1,0 +1,6 @@
+enum: PromoCodeStatus
+serialized: byName
+values:
+  - active
+  - disabled
+  - archived
