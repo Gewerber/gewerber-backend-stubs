@@ -1,0 +1,4 @@
+exception: SubscriptionException
+fields:
+  message: String
+  field: String?
