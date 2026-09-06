@@ -11,10 +11,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'package:gewerber_backend_commercial_server/src/generated/modules/subscription/models/admin_promo_code_create_request.dart'
+    as _io7fez2u;
 import 'package:gewerber_backend_commercial_server/src/generated/modules/waitlist/models/join_waitlist_request.dart'
     as _iiut8fxl;
 import 'package:serverpod/serverpod.dart' as _is;
 import '../endpoints/commercial_endpoint.dart' as _iel4lhgm;
+import '../modules/subscription/endpoints/admin_subscription_endpoint.dart'
+    as _ibfcmj7n;
 import '../modules/subscription/endpoints/plan_endpoint.dart' as _iik5xz03;
 import '../modules/subscription/endpoints/subscription_endpoint.dart'
     as _i3xdgbn1;
@@ -28,6 +32,12 @@ class Endpoints extends _is.EndpointDispatch {
         ..initialize(
           server,
           'commercial',
+          'gewerber_backend_commercial',
+        ),
+      'adminSubscription': _ibfcmj7n.AdminSubscriptionEndpoint()
+        ..initialize(
+          server,
+          'adminSubscription',
           'gewerber_backend_commercial',
         ),
       'plan': _iik5xz03.PlanEndpoint()
@@ -66,6 +76,141 @@ class Endpoints extends _is.EndpointDispatch {
         ),
       },
     );
+    connectors['adminSubscription'] = _is.EndpointConnector(
+      name: 'adminSubscription',
+      endpoint: endpoints['adminSubscription']!,
+      methodConnectors: {
+        'codesList': _is.MethodConnector(
+          name: 'codesList',
+          params: {
+            'status': _is.ParameterDescription(
+              name: 'status',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'limit': _is.ParameterDescription(
+              name: 'limit',
+              type: _is.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .codesList(
+                        session,
+                        status: params['status'],
+                        limit: params['limit'],
+                      ),
+        ),
+        'codeGet': _is.MethodConnector(
+          name: 'codeGet',
+          params: {
+            'promoCodeId': _is.ParameterDescription(
+              name: 'promoCodeId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .codeGet(
+                        session,
+                        params['promoCodeId'],
+                      ),
+        ),
+        'subscriptionsStats': _is.MethodConnector(
+          name: 'subscriptionsStats',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .subscriptionsStats(session),
+        ),
+        'subscriptionGetAdmin': _is.MethodConnector(
+          name: 'subscriptionGetAdmin',
+          params: {
+            'userId': _is.ParameterDescription(
+              name: 'userId',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .subscriptionGetAdmin(
+                        session,
+                        params['userId'],
+                      ),
+        ),
+        'codesCreate': _is.MethodConnector(
+          name: 'codesCreate',
+          params: {
+            'request': _is.ParameterDescription(
+              name: 'request',
+              type: _is.getType<_io7fez2u.AdminPromoCodeCreateRequest>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .codesCreate(
+                        session,
+                        params['request'],
+                      ),
+        ),
+        'codesSetStatus': _is.MethodConnector(
+          name: 'codesSetStatus',
+          params: {
+            'promoCodeId': _is.ParameterDescription(
+              name: 'promoCodeId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+            'status': _is.ParameterDescription(
+              name: 'status',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .codesSetStatus(
+                        session,
+                        params['promoCodeId'],
+                        params['status'],
+                      ),
+        ),
+      },
+    );
     connectors['plan'] = _is.EndpointConnector(
       name: 'plan',
       endpoint: endpoints['plan']!,
@@ -96,6 +241,82 @@ class Endpoints extends _is.EndpointDispatch {
               ) async =>
                   (endpoints['subscription'] as _i3xdgbn1.SubscriptionEndpoint)
                       .getMy(session),
+        ),
+        'validatePromo': _is.MethodConnector(
+          name: 'validatePromo',
+          params: {
+            'code': _is.ParameterDescription(
+              name: 'code',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'utmSource': _is.ParameterDescription(
+              name: 'utmSource',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'utmMedium': _is.ParameterDescription(
+              name: 'utmMedium',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'utmCampaign': _is.ParameterDescription(
+              name: 'utmCampaign',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['subscription'] as _i3xdgbn1.SubscriptionEndpoint)
+                      .validatePromo(
+                        session,
+                        params['code'],
+                        utmSource: params['utmSource'],
+                        utmMedium: params['utmMedium'],
+                        utmCampaign: params['utmCampaign'],
+                      ),
+        ),
+        'redeemPromo': _is.MethodConnector(
+          name: 'redeemPromo',
+          params: {
+            'code': _is.ParameterDescription(
+              name: 'code',
+              type: _is.getType<String>(),
+              nullable: false,
+            ),
+            'utmSource': _is.ParameterDescription(
+              name: 'utmSource',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'utmMedium': _is.ParameterDescription(
+              name: 'utmMedium',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+            'utmCampaign': _is.ParameterDescription(
+              name: 'utmCampaign',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['subscription'] as _i3xdgbn1.SubscriptionEndpoint)
+                      .redeemPromo(
+                        session,
+                        params['code'],
+                        utmSource: params['utmSource'],
+                        utmMedium: params['utmMedium'],
+                        utmCampaign: params['utmCampaign'],
+                      ),
         ),
       },
     );
