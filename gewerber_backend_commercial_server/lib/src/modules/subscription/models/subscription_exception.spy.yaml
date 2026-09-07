@@ -1,4 +1,25 @@
+### Raised by the user-facing `subscription` endpoint when the caller's own
+### subscription state cannot be read or changed.
+###
+### The `reason` field carries a machine-readable failure code, one of:
+### `notAuthenticated` (the caller must be signed in),
+### `planNotFound` (unknown / inactive / free plan code, or a promo code that
+### cannot be applied to the checkout),
+### `planNotProvisioned` (the plan or promo variant has no PayPal plan id
+### yet — an admin must run the plan sync first),
+### `checkoutFailed` (the checkout request itself is malformed, e.g. a
+### non-HTTPS return / cancel URL),
+### `notFound` (the caller has no subscription to act on),
+### `alreadyCanceled` (the subscription is already scheduled to cancel),
+### `alreadySubscribed` (an active or trialing subscription already exists),
+### `switchFailed` (the provider rejected a billing-cycle switch),
+### `providerError` (the payment provider is unavailable or rejected the
+### call).
 exception: SubscriptionException
 fields:
   message: String
   field: String?
+  ### Machine-readable failure reason: notAuthenticated / planNotFound /
+  ### planNotProvisioned / checkoutFailed / notFound / alreadyCanceled /
+  ### alreadySubscribed / switchFailed / providerError.
+  reason: String?

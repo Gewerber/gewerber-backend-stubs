@@ -29,6 +29,8 @@ import 'modules/subscription/models/admin_promo_redemption_row.dart'
     as _ic013jek;
 import 'modules/subscription/models/admin_subscription_stats.dart' as _isqlh41o;
 import 'modules/subscription/models/admin_subscription_view.dart' as _i9mpzdb5;
+import 'modules/subscription/models/checkout_request.dart' as _it4roxcd;
+import 'modules/subscription/models/checkout_view.dart' as _ipvgp8y2;
 import 'modules/subscription/models/paypal_event.dart' as _ir6pdw60;
 import 'modules/subscription/models/paypal_event_status.dart' as _i4aqbmlv;
 import 'modules/subscription/models/plan.dart' as _irkd04k7;
@@ -65,6 +67,8 @@ export 'modules/subscription/models/admin_promo_code_view.dart';
 export 'modules/subscription/models/admin_promo_redemption_row.dart';
 export 'modules/subscription/models/admin_subscription_stats.dart';
 export 'modules/subscription/models/admin_subscription_view.dart';
+export 'modules/subscription/models/checkout_request.dart';
+export 'modules/subscription/models/checkout_view.dart';
 export 'modules/subscription/models/paypal_event.dart';
 export 'modules/subscription/models/paypal_event_status.dart';
 export 'modules/subscription/models/plan.dart';
@@ -929,6 +933,12 @@ class Protocol extends _is.DatabaseSerializationManager {
     if (t == _i9mpzdb5.AdminSubscriptionView) {
       return _i9mpzdb5.AdminSubscriptionView.fromJson(data) as T;
     }
+    if (t == _it4roxcd.CheckoutRequest) {
+      return _it4roxcd.CheckoutRequest.fromJson(data) as T;
+    }
+    if (t == _ipvgp8y2.CheckoutView) {
+      return _ipvgp8y2.CheckoutView.fromJson(data) as T;
+    }
     if (t == _ir6pdw60.PaypalEvent) {
       return _ir6pdw60.PaypalEvent.fromJson(data) as T;
     }
@@ -1048,6 +1058,13 @@ class Protocol extends _is.DatabaseSerializationManager {
               ? _i9mpzdb5.AdminSubscriptionView.fromJson(data)
               : null)
           as T;
+    }
+    if (t == _is.getType<_it4roxcd.CheckoutRequest?>()) {
+      return (data != null ? _it4roxcd.CheckoutRequest.fromJson(data) : null)
+          as T;
+    }
+    if (t == _is.getType<_ipvgp8y2.CheckoutView?>()) {
+      return (data != null ? _ipvgp8y2.CheckoutView.fromJson(data) : null) as T;
     }
     if (t == _is.getType<_ir6pdw60.PaypalEvent?>()) {
       return (data != null ? _ir6pdw60.PaypalEvent.fromJson(data) : null) as T;
@@ -1211,6 +1228,8 @@ class Protocol extends _is.DatabaseSerializationManager {
       _ic013jek.AdminPromoRedemptionRow => 'AdminPromoRedemptionRow',
       _isqlh41o.AdminSubscriptionStats => 'AdminSubscriptionStats',
       _i9mpzdb5.AdminSubscriptionView => 'AdminSubscriptionView',
+      _it4roxcd.CheckoutRequest => 'CheckoutRequest',
+      _ipvgp8y2.CheckoutView => 'CheckoutView',
       _ir6pdw60.PaypalEvent => 'PaypalEvent',
       _i4aqbmlv.PaypalEventStatus => 'PaypalEventStatus',
       _irkd04k7.Plan => 'Plan',
@@ -1270,6 +1289,10 @@ class Protocol extends _is.DatabaseSerializationManager {
         return 'AdminSubscriptionStats';
       case _i9mpzdb5.AdminSubscriptionView():
         return 'AdminSubscriptionView';
+      case _it4roxcd.CheckoutRequest():
+        return 'CheckoutRequest';
+      case _ipvgp8y2.CheckoutView():
+        return 'CheckoutView';
       case _ir6pdw60.PaypalEvent():
         return 'PaypalEvent';
       case _i4aqbmlv.PaypalEventStatus():
@@ -1359,6 +1382,12 @@ class Protocol extends _is.DatabaseSerializationManager {
     }
     if (dataClassName == 'AdminSubscriptionView') {
       return deserialize<_i9mpzdb5.AdminSubscriptionView>(data['data']);
+    }
+    if (dataClassName == 'CheckoutRequest') {
+      return deserialize<_it4roxcd.CheckoutRequest>(data['data']);
+    }
+    if (dataClassName == 'CheckoutView') {
+      return deserialize<_ipvgp8y2.CheckoutView>(data['data']);
     }
     if (dataClassName == 'PaypalEvent') {
       return deserialize<_ir6pdw60.PaypalEvent>(data['data']);
