@@ -5,6 +5,9 @@ adminSubscription:
   - codeGet:
   - subscriptionsStats:
   - subscriptionGetAdmin:
+  - plansSync:
+  - discountVariantSync:
+  - plansStatus:
   - codesCreate:
   - codesSetStatus:
 plan:
@@ -13,5 +16,8 @@ subscription:
   - getMy:
   - validatePromo:
   - redeemPromo:
+  - createCheckout:
+  - cancelMySubscription:
+  - switchBillingCycle:
 waitlist:
   - join:

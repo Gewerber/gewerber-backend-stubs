@@ -11,8 +11,10 @@ fields:
   ### `AuthUser.id` of the acting administrator (`admin_user` allowlist
   ### entry), null in theory but always set by the endpoint.
   actorUserId: UuidValue?
-  ### Action identifier, always prefixed `admin.` (e.g.
-  ### `admin.promo_code.create`, `admin.promo_code.status_set`).
+  ### Action identifier: admin actions are prefixed `admin.` (e.g.
+  ### `admin.promo_code.create`, `admin.promo_code.status_set`), user
+  ### self-service lifecycle actions are prefixed `subscription.` (e.g.
+  ### `subscription.cancel_scheduled`, `subscription.cycle_switched`).
   action: String
   ### Subscription the action targeted, when applicable.
   subscriptionId: int?
