@@ -1,0 +1,13 @@
+### Result of `subscription.createCheckout`: redirect the buyer to
+### [approvalUrl] to approve the PayPal subscription.
+###
+### Nothing is persisted yet: the `Subscription` row is created / updated by
+### the PayPal webhook reconciliation once the buyer approves, so this view
+### is informational only.
+class: CheckoutView
+fields:
+  ### PayPal payer-action URL to redirect the buyer to.
+  approvalUrl: String
+  ### The PayPal subscription id (I-...) the approval belongs to, for
+  ### reference only (the webhook is the source of truth).
+  paypalSubscriptionId: String

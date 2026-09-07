@@ -70,8 +70,10 @@ abstract class SubscriptionEvent
   /// entry), null in theory but always set by the endpoint.
   _is.UuidValue? actorUserId;
 
-  /// Action identifier, always prefixed `admin.` (e.g.
-  /// `admin.promo_code.create`, `admin.promo_code.status_set`).
+  /// Action identifier: admin actions are prefixed `admin.` (e.g.
+  /// `admin.promo_code.create`, `admin.promo_code.status_set`), user
+  /// self-service lifecycle actions are prefixed `subscription.` (e.g.
+  /// `subscription.cancel_scheduled`, `subscription.cycle_switched`).
   String action;
 
   /// Subscription the action targeted, when applicable.
@@ -273,8 +275,10 @@ class SubscriptionEventTable extends _is.Table<int?> {
   /// entry), null in theory but always set by the endpoint.
   late final _is.ColumnUuid actorUserId;
 
-  /// Action identifier, always prefixed `admin.` (e.g.
-  /// `admin.promo_code.create`, `admin.promo_code.status_set`).
+  /// Action identifier: admin actions are prefixed `admin.` (e.g.
+  /// `admin.promo_code.create`, `admin.promo_code.status_set`), user
+  /// self-service lifecycle actions are prefixed `subscription.` (e.g.
+  /// `subscription.cancel_scheduled`, `subscription.cycle_switched`).
   late final _is.ColumnString action;
 
   /// Subscription the action targeted, when applicable.

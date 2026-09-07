@@ -11,8 +11,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'package:gewerber_backend_commercial_server/src/generated/future_calls.dart'
+    as _i2anyebz;
 import 'package:gewerber_backend_commercial_server/src/generated/modules/subscription/models/admin_promo_code_create_request.dart'
     as _io7fez2u;
+import 'package:gewerber_backend_commercial_server/src/generated/modules/subscription/models/checkout_request.dart'
+    as _ij4o7jdh;
+import 'package:gewerber_backend_commercial_server/src/generated/modules/subscription/models/subscription_billing_cycle.dart'
+    as _i078uvnd;
 import 'package:gewerber_backend_commercial_server/src/generated/modules/waitlist/models/join_waitlist_request.dart'
     as _iiut8fxl;
 import 'package:serverpod/serverpod.dart' as _is;
@@ -23,6 +29,7 @@ import '../modules/subscription/endpoints/plan_endpoint.dart' as _iik5xz03;
 import '../modules/subscription/endpoints/subscription_endpoint.dart'
     as _i3xdgbn1;
 import '../modules/waitlist/endpoints/waitlist_endpoint.dart' as _im6fuw82;
+export 'future_calls.dart' show ServerpodFutureCallsGetter;
 
 class Endpoints extends _is.EndpointDispatch {
   @override
@@ -160,6 +167,51 @@ class Endpoints extends _is.EndpointDispatch {
                         session,
                         params['userId'],
                       ),
+        ),
+        'plansSync': _is.MethodConnector(
+          name: 'plansSync',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .plansSync(session),
+        ),
+        'discountVariantSync': _is.MethodConnector(
+          name: 'discountVariantSync',
+          params: {
+            'promoCodeId': _is.ParameterDescription(
+              name: 'promoCodeId',
+              type: _is.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .discountVariantSync(
+                        session,
+                        params['promoCodeId'],
+                      ),
+        ),
+        'plansStatus': _is.MethodConnector(
+          name: 'plansStatus',
+          params: {},
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['adminSubscription']
+                          as _ibfcmj7n.AdminSubscriptionEndpoint)
+                      .plansStatus(session),
         ),
         'codesCreate': _is.MethodConnector(
           name: 'codesCreate',
@@ -318,6 +370,66 @@ class Endpoints extends _is.EndpointDispatch {
                         utmCampaign: params['utmCampaign'],
                       ),
         ),
+        'createCheckout': _is.MethodConnector(
+          name: 'createCheckout',
+          params: {
+            'request': _is.ParameterDescription(
+              name: 'request',
+              type: _is.getType<_ij4o7jdh.CheckoutRequest>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['subscription'] as _i3xdgbn1.SubscriptionEndpoint)
+                      .createCheckout(
+                        session,
+                        params['request'],
+                      ),
+        ),
+        'cancelMySubscription': _is.MethodConnector(
+          name: 'cancelMySubscription',
+          params: {
+            'reason': _is.ParameterDescription(
+              name: 'reason',
+              type: _is.getType<String?>(),
+              nullable: true,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['subscription'] as _i3xdgbn1.SubscriptionEndpoint)
+                      .cancelMySubscription(
+                        session,
+                        reason: params['reason'],
+                      ),
+        ),
+        'switchBillingCycle': _is.MethodConnector(
+          name: 'switchBillingCycle',
+          params: {
+            'newCycle': _is.ParameterDescription(
+              name: 'newCycle',
+              type: _is.getType<_i078uvnd.SubscriptionBillingCycle>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _is.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['subscription'] as _i3xdgbn1.SubscriptionEndpoint)
+                      .switchBillingCycle(
+                        session,
+                        params['newCycle'],
+                      ),
+        ),
       },
     );
     connectors['waitlist'] = _is.EndpointConnector(
@@ -345,5 +457,10 @@ class Endpoints extends _is.EndpointDispatch {
         ),
       },
     );
+  }
+
+  @override
+  _is.FutureCallDispatch? get futureCalls {
+    return _i2anyebz.FutureCalls();
   }
 }
