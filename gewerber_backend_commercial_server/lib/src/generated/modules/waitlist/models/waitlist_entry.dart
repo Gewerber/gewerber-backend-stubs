@@ -27,6 +27,11 @@ abstract class WaitlistEntry
     this.utmSource,
     this.utmMedium,
     this.utmCampaign,
+    this.utmTerm,
+    this.utmContent,
+    this.gclid,
+    this.fbclid,
+    this.landingPage,
     this.businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -45,6 +50,11 @@ abstract class WaitlistEntry
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -69,6 +79,11 @@ abstract class WaitlistEntry
       utmSource: jsonSerialization['utmSource'] as String?,
       utmMedium: jsonSerialization['utmMedium'] as String?,
       utmCampaign: jsonSerialization['utmCampaign'] as String?,
+      utmTerm: jsonSerialization['utmTerm'] as String?,
+      utmContent: jsonSerialization['utmContent'] as String?,
+      gclid: jsonSerialization['gclid'] as String?,
+      fbclid: jsonSerialization['fbclid'] as String?,
+      landingPage: jsonSerialization['landingPage'] as String?,
       businessType: jsonSerialization['businessType'] as String?,
       status: jsonSerialization['status'] == null
           ? null
@@ -105,6 +120,16 @@ abstract class WaitlistEntry
 
   String? utmCampaign;
 
+  String? utmTerm;
+
+  String? utmContent;
+
+  String? gclid;
+
+  String? fbclid;
+
+  String? landingPage;
+
   String? businessType;
 
   _ilsh1rjc.WaitlistStatus status;
@@ -128,6 +153,11 @@ abstract class WaitlistEntry
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -145,6 +175,11 @@ abstract class WaitlistEntry
       if (utmSource != null) 'utmSource': utmSource,
       if (utmMedium != null) 'utmMedium': utmMedium,
       if (utmCampaign != null) 'utmCampaign': utmCampaign,
+      if (utmTerm != null) 'utmTerm': utmTerm,
+      if (utmContent != null) 'utmContent': utmContent,
+      if (gclid != null) 'gclid': gclid,
+      if (fbclid != null) 'fbclid': fbclid,
+      if (landingPage != null) 'landingPage': landingPage,
       if (businessType != null) 'businessType': businessType,
       'status': status.toJson(),
       'createdAt': createdAt.toJson(),
@@ -164,6 +199,11 @@ abstract class WaitlistEntry
       if (utmSource != null) 'utmSource': utmSource,
       if (utmMedium != null) 'utmMedium': utmMedium,
       if (utmCampaign != null) 'utmCampaign': utmCampaign,
+      if (utmTerm != null) 'utmTerm': utmTerm,
+      if (utmContent != null) 'utmContent': utmContent,
+      if (gclid != null) 'gclid': gclid,
+      if (fbclid != null) 'fbclid': fbclid,
+      if (landingPage != null) 'landingPage': landingPage,
       if (businessType != null) 'businessType': businessType,
       'status': status.toJson(),
       'createdAt': createdAt.toJson(),
@@ -211,6 +251,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -224,6 +269,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
          utmSource: utmSource,
          utmMedium: utmMedium,
          utmCampaign: utmCampaign,
+         utmTerm: utmTerm,
+         utmContent: utmContent,
+         gclid: gclid,
+         fbclid: fbclid,
+         landingPage: landingPage,
          businessType: businessType,
          status: status,
          createdAt: createdAt,
@@ -243,6 +293,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
     Object? utmSource = _Undefined,
     Object? utmMedium = _Undefined,
     Object? utmCampaign = _Undefined,
+    Object? utmTerm = _Undefined,
+    Object? utmContent = _Undefined,
+    Object? gclid = _Undefined,
+    Object? fbclid = _Undefined,
+    Object? landingPage = _Undefined,
     Object? businessType = _Undefined,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -257,6 +312,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
       utmSource: utmSource is String? ? utmSource : this.utmSource,
       utmMedium: utmMedium is String? ? utmMedium : this.utmMedium,
       utmCampaign: utmCampaign is String? ? utmCampaign : this.utmCampaign,
+      utmTerm: utmTerm is String? ? utmTerm : this.utmTerm,
+      utmContent: utmContent is String? ? utmContent : this.utmContent,
+      gclid: gclid is String? ? gclid : this.gclid,
+      fbclid: fbclid is String? ? fbclid : this.fbclid,
+      landingPage: landingPage is String? ? landingPage : this.landingPage,
       businessType: businessType is String? ? businessType : this.businessType,
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
@@ -304,6 +364,31 @@ class WaitlistEntryUpdateTable extends _is.UpdateTable<WaitlistEntryTable> {
 
   _is.ColumnValue<String, String> utmCampaign(String? value) => _is.ColumnValue(
     table.utmCampaign,
+    value,
+  );
+
+  _is.ColumnValue<String, String> utmTerm(String? value) => _is.ColumnValue(
+    table.utmTerm,
+    value,
+  );
+
+  _is.ColumnValue<String, String> utmContent(String? value) => _is.ColumnValue(
+    table.utmContent,
+    value,
+  );
+
+  _is.ColumnValue<String, String> gclid(String? value) => _is.ColumnValue(
+    table.gclid,
+    value,
+  );
+
+  _is.ColumnValue<String, String> fbclid(String? value) => _is.ColumnValue(
+    table.fbclid,
+    value,
+  );
+
+  _is.ColumnValue<String, String> landingPage(String? value) => _is.ColumnValue(
+    table.landingPage,
     value,
   );
 
@@ -369,6 +454,26 @@ class WaitlistEntryTable extends _is.Table<int?> {
       'utmCampaign',
       this,
     );
+    utmTerm = _is.ColumnString(
+      'utmTerm',
+      this,
+    );
+    utmContent = _is.ColumnString(
+      'utmContent',
+      this,
+    );
+    gclid = _is.ColumnString(
+      'gclid',
+      this,
+    );
+    fbclid = _is.ColumnString(
+      'fbclid',
+      this,
+    );
+    landingPage = _is.ColumnString(
+      'landingPage',
+      this,
+    );
     businessType = _is.ColumnString(
       'businessType',
       this,
@@ -406,6 +511,16 @@ class WaitlistEntryTable extends _is.Table<int?> {
 
   late final _is.ColumnString utmCampaign;
 
+  late final _is.ColumnString utmTerm;
+
+  late final _is.ColumnString utmContent;
+
+  late final _is.ColumnString gclid;
+
+  late final _is.ColumnString fbclid;
+
+  late final _is.ColumnString landingPage;
+
   late final _is.ColumnString businessType;
 
   late final _is.ColumnEnum<_ilsh1rjc.WaitlistStatus> status;
@@ -424,6 +539,11 @@ class WaitlistEntryTable extends _is.Table<int?> {
     utmSource,
     utmMedium,
     utmCampaign,
+    utmTerm,
+    utmContent,
+    gclid,
+    fbclid,
+    landingPage,
     businessType,
     status,
     createdAt,
