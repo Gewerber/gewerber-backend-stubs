@@ -1,119 +1,6 @@
 BEGIN;
 
 --
--- Class PaypalEvent as table commercial_paypal_event
---
-CREATE TABLE "commercial_paypal_event" (
-    "id" bigserial PRIMARY KEY,
-    "eventId" text NOT NULL,
-    "type" text NOT NULL,
-    "payload" text NOT NULL,
-    "status" text NOT NULL DEFAULT 'received'::text,
-    "processError" text,
-    "receivedAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "processedAt" timestamp without time zone
-);
-
--- Indexes
-CREATE UNIQUE INDEX "commercial_paypal_event__eventId__unique_idx" ON "commercial_paypal_event" USING btree ("eventId");
-
---
--- Class Plan as table commercial_plan
---
-CREATE TABLE "commercial_plan" (
-    "id" bigserial PRIMARY KEY,
-    "code" text NOT NULL,
-    "tier" text NOT NULL,
-    "name" text NOT NULL,
-    "currency" text NOT NULL DEFAULT 'eur'::text,
-    "priceMonthlyMinor" bigint NOT NULL DEFAULT 0,
-    "priceAnnualMinor" bigint NOT NULL DEFAULT 0,
-    "paypalProductId" text,
-    "paypalPlanIdMonthly" text,
-    "paypalPlanIdAnnual" text,
-    "features" json NOT NULL,
-    "isActive" boolean NOT NULL DEFAULT true,
-    "sortOrder" bigint NOT NULL DEFAULT 0,
-    "createdAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- Indexes
-CREATE UNIQUE INDEX "commercial_plan__code__unique_idx" ON "commercial_plan" USING btree ("code");
-
---
--- Class PromoCode as table commercial_promo_code
---
-CREATE TABLE "commercial_promo_code" (
-    "id" bigserial PRIMARY KEY,
-    "code" text NOT NULL,
-    "kind" text NOT NULL,
-    "discountType" text,
-    "discountPercent" bigint,
-    "discountMinor" bigint,
-    "trialDays" bigint,
-    "planId" bigint,
-    "maxRedemptions" bigint,
-    "perUserLimit" bigint NOT NULL DEFAULT 1,
-    "validFrom" timestamp without time zone,
-    "validUntil" timestamp without time zone,
-    "campaign" text,
-    "ref" text,
-    "note" text,
-    "status" text NOT NULL DEFAULT 'active'::text,
-    "paypalPlanVariantId" text,
-    "createdAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- Indexes
-CREATE UNIQUE INDEX "commercial_promo_code__code__unique_idx" ON "commercial_promo_code" USING btree ("code");
-
---
--- Class PromoRedemption as table commercial_promo_redemption
---
-CREATE TABLE "commercial_promo_redemption" (
-    "id" bigserial PRIMARY KEY,
-    "promoCodeId" bigint NOT NULL,
-    "userId" uuid NOT NULL,
-    "businessId" bigint,
-    "appliedSubscriptionId" bigint,
-    "utmSource" text,
-    "utmMedium" text,
-    "utmCampaign" text,
-    "redeemedAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- Indexes
-CREATE UNIQUE INDEX "promo_redemption_promo_user_unique_idx" ON "commercial_promo_redemption" USING btree ("promoCodeId", "userId");
-
---
--- Class Subscription as table commercial_subscription
---
-CREATE TABLE "commercial_subscription" (
-    "id" bigserial PRIMARY KEY,
-    "userId" uuid NOT NULL,
-    "businessId" bigint,
-    "planId" bigint NOT NULL,
-    "status" text NOT NULL DEFAULT 'trialing'::text,
-    "billingCycle" text NOT NULL DEFAULT 'monthly'::text,
-    "currentPeriodStart" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "currentPeriodEnd" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "trialEndsAt" timestamp without time zone,
-    "cancelAtPeriodEnd" boolean NOT NULL DEFAULT false,
-    "canceledAt" timestamp without time zone,
-    "paypalSubscriptionId" text,
-    "paypalPayerId" text,
-    "appliedPromoCodeId" bigint,
-    "createdAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- Indexes
-CREATE INDEX "subscription_user_idx" ON "commercial_subscription" USING btree ("userId");
-CREATE INDEX "subscription_paypal_subscription_idx" ON "commercial_subscription" USING btree ("paypalSubscriptionId");
-
---
 -- Class WaitlistEntry as table commercial_waitlist_entry
 --
 CREATE TABLE "commercial_waitlist_entry" (
@@ -125,6 +12,11 @@ CREATE TABLE "commercial_waitlist_entry" (
     "utmSource" text,
     "utmMedium" text,
     "utmCampaign" text,
+    "utmTerm" text,
+    "utmContent" text,
+    "gclid" text,
+    "fbclid" text,
+    "landingPage" text,
     "businessType" text,
     "status" text NOT NULL DEFAULT 'pending'::text,
     "createdAt" timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -389,16 +281,6 @@ CREATE INDEX "serverpod_session_log_touched_idx" ON "serverpod_session_log" USIN
 CREATE INDEX "serverpod_session_log_isopen_idx" ON "serverpod_session_log" USING btree ("isOpen");
 
 --
--- Foreign relations for "commercial_subscription" table
---
-ALTER TABLE ONLY "commercial_subscription"
-    ADD CONSTRAINT "commercial_subscription_fk_0"
-    FOREIGN KEY("planId")
-    REFERENCES "commercial_plan"("id")
-    ON DELETE RESTRICT
-    ON UPDATE NO ACTION;
-
---
 -- Foreign relations for "serverpod_future_call_claim" table
 --
 ALTER TABLE ONLY "serverpod_future_call_claim"
@@ -443,9 +325,9 @@ ALTER TABLE ONLY "serverpod_query_log"
 -- MIGRATION VERSION FOR gewerber_backend_commercial
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('gewerber_backend_commercial', '20260906094321374', now())
+    VALUES ('gewerber_backend_commercial', '20260911152358295', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20260906094321374', "timestamp" = now();
+    DO UPDATE SET "version" = '20260911152358295', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod
