@@ -1,9 +1,0 @@
-### Number of promo-code redemptions attributed to one campaign label (part
-### of `adminSubscription.subscriptionsStats`). The `null` campaign groups
-### all redemptions of codes without a campaign label.
-class: AdminCampaignCount
-fields:
-  ### Campaign label of the redeemed code, null when the code has none.
-  campaign: String?
-  ### Number of redemptions of codes carrying that label.
-  count: int

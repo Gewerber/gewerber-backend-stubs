@@ -1,9 +1,0 @@
-class: PlanView
-fields:
-  code: String
-  tier: PlanTier
-  name: String
-  currency: String
-  priceMonthlyMinor: int
-  priceAnnualMinor: int
-  features: List<String>

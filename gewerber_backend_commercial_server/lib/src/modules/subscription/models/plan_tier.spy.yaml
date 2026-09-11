@@ -1,6 +1,0 @@
-enum: PlanTier
-serialized: byName
-values:
-  - free
-  - pro
-  - business

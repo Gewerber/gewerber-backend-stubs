@@ -1,5 +1,0 @@
-enum: PromoDiscountType
-serialized: byName
-values:
-  - percent
-  - fixed

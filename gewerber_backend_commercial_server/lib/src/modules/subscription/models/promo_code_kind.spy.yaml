@@ -1,6 +1,0 @@
-enum: PromoCodeKind
-serialized: byName
-values:
-  - trial
-  - discount
-  - attribution
