@@ -8,6 +8,11 @@ fields:
   utmSource: String?
   utmMedium: String?
   utmCampaign: String?
+  utmTerm: String?
+  utmContent: String?
+  gclid: String?
+  fbclid: String?
+  landingPage: String?
   businessType: String?
   status: WaitlistStatus, default=pending
   createdAt: DateTime, default=now

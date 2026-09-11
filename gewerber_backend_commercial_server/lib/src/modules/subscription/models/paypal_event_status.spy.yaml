@@ -1,6 +1,0 @@
-enum: PaypalEventStatus
-serialized: byName
-values:
-  - received
-  - processed
-  - failed
