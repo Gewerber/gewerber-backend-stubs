@@ -7,5 +7,10 @@ fields:
   utmSource: String?
   utmMedium: String?
   utmCampaign: String?
+  utmTerm: String?
+  utmContent: String?
+  gclid: String?
+  fbclid: String?
+  landingPage: String?
   businessType: String?
   honeypot: String?

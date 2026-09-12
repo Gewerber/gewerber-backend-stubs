@@ -27,6 +27,11 @@ abstract class WaitlistEntry
     this.utmSource,
     this.utmMedium,
     this.utmCampaign,
+    this.utmTerm,
+    this.utmContent,
+    this.gclid,
+    this.fbclid,
+    this.landingPage,
     this.businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -45,6 +50,11 @@ abstract class WaitlistEntry
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -69,6 +79,11 @@ abstract class WaitlistEntry
       utmSource: jsonSerialization['utmSource'] as String?,
       utmMedium: jsonSerialization['utmMedium'] as String?,
       utmCampaign: jsonSerialization['utmCampaign'] as String?,
+      utmTerm: jsonSerialization['utmTerm'] as String?,
+      utmContent: jsonSerialization['utmContent'] as String?,
+      gclid: jsonSerialization['gclid'] as String?,
+      fbclid: jsonSerialization['fbclid'] as String?,
+      landingPage: jsonSerialization['landingPage'] as String?,
       businessType: jsonSerialization['businessType'] as String?,
       status: jsonSerialization['status'] == null
           ? null
@@ -103,6 +118,16 @@ abstract class WaitlistEntry
 
   String? utmCampaign;
 
+  String? utmTerm;
+
+  String? utmContent;
+
+  String? gclid;
+
+  String? fbclid;
+
+  String? landingPage;
+
   String? businessType;
 
   _ilsh1rjc.WaitlistStatus status;
@@ -123,6 +148,11 @@ abstract class WaitlistEntry
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -140,6 +170,11 @@ abstract class WaitlistEntry
       if (utmSource != null) 'utmSource': utmSource,
       if (utmMedium != null) 'utmMedium': utmMedium,
       if (utmCampaign != null) 'utmCampaign': utmCampaign,
+      if (utmTerm != null) 'utmTerm': utmTerm,
+      if (utmContent != null) 'utmContent': utmContent,
+      if (gclid != null) 'gclid': gclid,
+      if (fbclid != null) 'fbclid': fbclid,
+      if (landingPage != null) 'landingPage': landingPage,
       if (businessType != null) 'businessType': businessType,
       'status': status.toJson(),
       'createdAt': createdAt.toJson(),
@@ -159,6 +194,11 @@ abstract class WaitlistEntry
       if (utmSource != null) 'utmSource': utmSource,
       if (utmMedium != null) 'utmMedium': utmMedium,
       if (utmCampaign != null) 'utmCampaign': utmCampaign,
+      if (utmTerm != null) 'utmTerm': utmTerm,
+      if (utmContent != null) 'utmContent': utmContent,
+      if (gclid != null) 'gclid': gclid,
+      if (fbclid != null) 'fbclid': fbclid,
+      if (landingPage != null) 'landingPage': landingPage,
       if (businessType != null) 'businessType': businessType,
       'status': status.toJson(),
       'createdAt': createdAt.toJson(),
@@ -184,6 +224,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -197,6 +242,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
          utmSource: utmSource,
          utmMedium: utmMedium,
          utmCampaign: utmCampaign,
+         utmTerm: utmTerm,
+         utmContent: utmContent,
+         gclid: gclid,
+         fbclid: fbclid,
+         landingPage: landingPage,
          businessType: businessType,
          status: status,
          createdAt: createdAt,
@@ -216,6 +266,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
     Object? utmSource = _Undefined,
     Object? utmMedium = _Undefined,
     Object? utmCampaign = _Undefined,
+    Object? utmTerm = _Undefined,
+    Object? utmContent = _Undefined,
+    Object? gclid = _Undefined,
+    Object? fbclid = _Undefined,
+    Object? landingPage = _Undefined,
     Object? businessType = _Undefined,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
@@ -230,6 +285,11 @@ class _WaitlistEntryImpl extends WaitlistEntry {
       utmSource: utmSource is String? ? utmSource : this.utmSource,
       utmMedium: utmMedium is String? ? utmMedium : this.utmMedium,
       utmCampaign: utmCampaign is String? ? utmCampaign : this.utmCampaign,
+      utmTerm: utmTerm is String? ? utmTerm : this.utmTerm,
+      utmContent: utmContent is String? ? utmContent : this.utmContent,
+      gclid: gclid is String? ? gclid : this.gclid,
+      fbclid: fbclid is String? ? fbclid : this.fbclid,
+      landingPage: landingPage is String? ? landingPage : this.landingPage,
       businessType: businessType is String? ? businessType : this.businessType,
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,

@@ -1,8 +1,0 @@
-enum: SubscriptionStatus
-serialized: byName
-values:
-  - trialing
-  - active
-  - past_due
-  - canceled
-  - expired

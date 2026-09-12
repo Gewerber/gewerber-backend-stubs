@@ -7,7 +7,7 @@ Intended scope:
 - Double-entry bookkeeping (guiding ledger)
 - Multi-currency invoicing and accounting
 - Employees / payroll
-- Subscriptions and recurring billing automation
+- Recurring billing automation
 - Advanced cost accounting
 
 Do not move this logic into the open-source core. See org open-core boundaries.

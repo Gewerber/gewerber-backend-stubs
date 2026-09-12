@@ -1,23 +1,4 @@
 commercial:
   - status:
-adminSubscription:
-  - codesList:
-  - codeGet:
-  - subscriptionsStats:
-  - subscriptionGetAdmin:
-  - plansSync:
-  - discountVariantSync:
-  - plansStatus:
-  - codesCreate:
-  - codesSetStatus:
-plan:
-  - list:
-subscription:
-  - getMy:
-  - validatePromo:
-  - redeemPromo:
-  - createCheckout:
-  - cancelMySubscription:
-  - switchBillingCycle:
 waitlist:
   - join:

@@ -25,6 +25,11 @@ abstract class JoinWaitlistRequest
     this.utmSource,
     this.utmMedium,
     this.utmCampaign,
+    this.utmTerm,
+    this.utmContent,
+    this.gclid,
+    this.fbclid,
+    this.landingPage,
     this.businessType,
     this.honeypot,
   }) : locale = locale ?? _imzvqjwd.WaitlistLocale.de,
@@ -38,6 +43,11 @@ abstract class JoinWaitlistRequest
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     String? honeypot,
   }) = _JoinWaitlistRequestImpl;
@@ -59,6 +69,11 @@ abstract class JoinWaitlistRequest
       utmSource: jsonSerialization['utmSource'] as String?,
       utmMedium: jsonSerialization['utmMedium'] as String?,
       utmCampaign: jsonSerialization['utmCampaign'] as String?,
+      utmTerm: jsonSerialization['utmTerm'] as String?,
+      utmContent: jsonSerialization['utmContent'] as String?,
+      gclid: jsonSerialization['gclid'] as String?,
+      fbclid: jsonSerialization['fbclid'] as String?,
+      landingPage: jsonSerialization['landingPage'] as String?,
       businessType: jsonSerialization['businessType'] as String?,
       honeypot: jsonSerialization['honeypot'] as String?,
     );
@@ -78,6 +93,16 @@ abstract class JoinWaitlistRequest
 
   String? utmCampaign;
 
+  String? utmTerm;
+
+  String? utmContent;
+
+  String? gclid;
+
+  String? fbclid;
+
+  String? landingPage;
+
   String? businessType;
 
   String? honeypot;
@@ -93,6 +118,11 @@ abstract class JoinWaitlistRequest
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     String? honeypot,
   });
@@ -107,6 +137,11 @@ abstract class JoinWaitlistRequest
       if (utmSource != null) 'utmSource': utmSource,
       if (utmMedium != null) 'utmMedium': utmMedium,
       if (utmCampaign != null) 'utmCampaign': utmCampaign,
+      if (utmTerm != null) 'utmTerm': utmTerm,
+      if (utmContent != null) 'utmContent': utmContent,
+      if (gclid != null) 'gclid': gclid,
+      if (fbclid != null) 'fbclid': fbclid,
+      if (landingPage != null) 'landingPage': landingPage,
       if (businessType != null) 'businessType': businessType,
       if (honeypot != null) 'honeypot': honeypot,
     };
@@ -123,6 +158,11 @@ abstract class JoinWaitlistRequest
       if (utmSource != null) 'utmSource': utmSource,
       if (utmMedium != null) 'utmMedium': utmMedium,
       if (utmCampaign != null) 'utmCampaign': utmCampaign,
+      if (utmTerm != null) 'utmTerm': utmTerm,
+      if (utmContent != null) 'utmContent': utmContent,
+      if (gclid != null) 'gclid': gclid,
+      if (fbclid != null) 'fbclid': fbclid,
+      if (landingPage != null) 'landingPage': landingPage,
       if (businessType != null) 'businessType': businessType,
       if (honeypot != null) 'honeypot': honeypot,
     };
@@ -145,6 +185,11 @@ class _JoinWaitlistRequestImpl extends JoinWaitlistRequest {
     String? utmSource,
     String? utmMedium,
     String? utmCampaign,
+    String? utmTerm,
+    String? utmContent,
+    String? gclid,
+    String? fbclid,
+    String? landingPage,
     String? businessType,
     String? honeypot,
   }) : super._(
@@ -155,6 +200,11 @@ class _JoinWaitlistRequestImpl extends JoinWaitlistRequest {
          utmSource: utmSource,
          utmMedium: utmMedium,
          utmCampaign: utmCampaign,
+         utmTerm: utmTerm,
+         utmContent: utmContent,
+         gclid: gclid,
+         fbclid: fbclid,
+         landingPage: landingPage,
          businessType: businessType,
          honeypot: honeypot,
        );
@@ -171,6 +221,11 @@ class _JoinWaitlistRequestImpl extends JoinWaitlistRequest {
     Object? utmSource = _Undefined,
     Object? utmMedium = _Undefined,
     Object? utmCampaign = _Undefined,
+    Object? utmTerm = _Undefined,
+    Object? utmContent = _Undefined,
+    Object? gclid = _Undefined,
+    Object? fbclid = _Undefined,
+    Object? landingPage = _Undefined,
     Object? businessType = _Undefined,
     Object? honeypot = _Undefined,
   }) {
@@ -182,6 +237,11 @@ class _JoinWaitlistRequestImpl extends JoinWaitlistRequest {
       utmSource: utmSource is String? ? utmSource : this.utmSource,
       utmMedium: utmMedium is String? ? utmMedium : this.utmMedium,
       utmCampaign: utmCampaign is String? ? utmCampaign : this.utmCampaign,
+      utmTerm: utmTerm is String? ? utmTerm : this.utmTerm,
+      utmContent: utmContent is String? ? utmContent : this.utmContent,
+      gclid: gclid is String? ? gclid : this.gclid,
+      fbclid: fbclid is String? ? fbclid : this.fbclid,
+      landingPage: landingPage is String? ? landingPage : this.landingPage,
       businessType: businessType is String? ? businessType : this.businessType,
       honeypot: honeypot is String? ? honeypot : this.honeypot,
     );
