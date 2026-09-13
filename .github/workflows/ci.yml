@@ -1,9 +1,33 @@
+# CI for the public stub packages of the closed `commercial` module.
+#
+#   - `analyze`     — the workspace must stay analyzable (`--fatal-infos`).
+#   - `codegen`     — `serverpod generate` must reproduce the committed
+#                     artifacts byte for byte. Drift here is invisible to
+#                     `analyze` because the artifacts *are* the contract that
+#                     open-source builds compile against.
+#   - `contract`    — `tool/check_public_contract.py` asserts the stubs expose
+#                     exactly the public contract and nothing of the closed
+#                     module's internals (symbols, tables, columns, endpoints).
+#   - `oss-consumer`— the open-source backend must still resolve and analyze
+#                     against *these* stubs. This is the only check that catches
+#                     a contract change breaking its consumer in the same round,
+#                     rather than weeks later on the consumer's CI.
+#
+# The stubs float on `ref: main` in the consumer's pubspec, so a merged change
+# here takes effect downstream immediately: run the consumer check *before*
+# merging, not after. No secrets and no private access are used anywhere — the
+# consumer repository is public, and the local stubs are injected through the
+# consumer's gitignored `pubspec_overrides.yaml`.
+
 name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
+  schedule:
+    # Catch upstream drift even when nothing changed in this repository.
+    - cron: '34 6 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -24,3 +48,97 @@ jobs:
 
       - name: Analyze
         run: dart analyze --fatal-infos .
+
+  contract:
+    name: Public-contract guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Guard the public contract
+        run: python3 tool/check_public_contract.py --repo-root .
+
+  codegen:
+    name: Generated artifacts are reproducible
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      # The generator must be the version the packages depend on, otherwise a
+      # codegen difference shows up as a false "drift" failure.
+      - name: Resolve the pinned Serverpod version
+        id: pin
+        run: |
+          version="$(sed -nE 's/^  serverpod: (.*)$/\1/p' \
+            gewerber_backend_commercial_server/pubspec.yaml)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Install Serverpod CLI
+        run: dart pub global activate serverpod_cli "${{ steps.pin.outputs.version }}"
+
+      - name: Regenerate
+        working-directory: gewerber_backend_commercial_server
+        run: |
+          export PATH="$PATH:$HOME/.pub-cache/bin"
+          serverpod generate --force
+
+      - name: Fail on drift
+        run: |
+          if ! git diff --exit-code -- \
+              gewerber_backend_commercial_server/lib/src/generated \
+              gewerber_backend_commercial_client/lib/src/protocol; then
+            git status --short -- \
+              gewerber_backend_commercial_server/lib/src/generated \
+              gewerber_backend_commercial_client/lib/src/protocol
+            echo "::error::committed generated artifacts do not match 'serverpod generate'. Regenerate (see README 'Regenerating') and commit the result — hand-editing generated code or forgetting a model change both leak the closed module's shape to OSS builds."
+            exit 1
+          fi
+
+  oss-consumer:
+    name: OSS backend still builds against these stubs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout stubs
+        uses: actions/checkout@v7
+        with:
+          path: stubs
+
+      - name: Checkout the open-source consumer
+        uses: actions/checkout@v7
+        with:
+          repository: Gewerber/gewerber-backend
+          path: backend
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      # Replace the floating `ref: main` git dependencies with these working-tree
+      # packages, so the check exercises *this* commit rather than what main
+      # happened to publish. The file is gitignored upstream.
+      - name: Point the consumer at these stubs
+        run: |
+          {
+            echo 'dependency_overrides:'
+            echo '  gewerber_backend_commercial_server:'
+            echo "    path: '$GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_server'"
+            echo '  gewerber_backend_commercial_client:'
+            echo "    path: '$GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_client'"
+          } > backend/gewerber_backend_server/pubspec_overrides.yaml
+          cp backend/gewerber_backend_server/pubspec_overrides.yaml \
+            backend/gewerber_backend_client/pubspec_overrides.yaml
+
+      - name: Install dependencies
+        working-directory: backend
+        run: dart pub get
+
+      - name: Analyze
+        working-directory: backend
+        run: dart analyze
