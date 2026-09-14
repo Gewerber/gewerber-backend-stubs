@@ -10,7 +10,6 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-
 import 'package:gewerber_backend_commercial_server/src/generated/modules/waitlist/models/join_waitlist_request.dart'
     as _iiut8fxl;
 import 'package:serverpod/serverpod.dart' as _is;
