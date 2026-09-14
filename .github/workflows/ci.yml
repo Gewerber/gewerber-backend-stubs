@@ -142,6 +142,18 @@ jobs:
           	EOF
           cat backend/pubspec_overrides.yaml
 
+      # The stubs and the OSS backend move Serverpod versions in lockstep
+      # (same release train). Until backend `develop` lands its rc-bump PR,
+      # align the cloned consumer's pins with this branch so the cross-check
+      # exercises the pairing that will actually exist, not a mixed state.
+      - name: Align consumer Serverpod pins with the stubs
+        working-directory: backend
+        run: |
+          sp="$(grep -m1 -oE '4\.0\.0-rc\.[0-9]+' ../stubs/gewerber_backend_commercial_server/pubspec.yaml)"
+          echo "aligning consumer to serverpod $sp"
+          grep -rl 'serverpod[a-z_]*: 4\.0\.0-rc\.[0-9]\+' --include=pubspec.yaml . | \
+            xargs -r sed -i -E "s/(serverpod[a-z_]*: )4\.0\.0-rc\.[0-9]+/\1$sp/g"
+
       - name: Install dependencies
         working-directory: backend
         run: dart pub get
