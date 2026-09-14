@@ -122,18 +122,19 @@ jobs:
 
       # Replace the floating `ref: main` git dependencies with these working-tree
       # packages, so the check exercises *this* commit rather than what main
-      # happened to publish. The file is gitignored upstream.
+      # happened to publish. One file at the workspace root: the consumer is a
+      # Dart workspace, and pub rejects the same package being overridden in two
+      # member packages. The file is gitignored upstream.
       - name: Point the consumer at these stubs
         run: |
-          {
-            echo 'dependency_overrides:'
-            echo '  gewerber_backend_commercial_server:'
-            echo "    path: '$GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_server'"
-            echo '  gewerber_backend_commercial_client:'
-            echo "    path: '$GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_client'"
-          } > backend/gewerber_backend_server/pubspec_overrides.yaml
-          cp backend/gewerber_backend_server/pubspec_overrides.yaml \
-            backend/gewerber_backend_client/pubspec_overrides.yaml
+          cat > backend/pubspec_overrides.yaml <<-EOF
+          	dependency_overrides:
+          	  gewerber_backend_commercial_server:
+          	    path: $GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_server
+          	  gewerber_backend_commercial_client:
+          	    path: $GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_client
+          	EOF
+          cat backend/pubspec_overrides.yaml
 
       - name: Install dependencies
         working-directory: backend
