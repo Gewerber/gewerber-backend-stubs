@@ -5,9 +5,9 @@ publish_to: none
 repository: https://github.com/Gewerber/gewerber-backend-stubs
 
 environment:
-  sdk: '^3.12.0'
+  sdk: '^3.13.3'
 
 resolution: workspace
 
 dependencies:
-  serverpod_client: 4.0.0-rc.1
+  serverpod_client: 4.0.0-rc.2

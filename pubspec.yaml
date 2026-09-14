@@ -4,7 +4,7 @@ description: Public placeholder packages for the Gewerber commercial Serverpod m
 version: 0.0.1
 
 environment:
-  sdk: '^3.12.0'
+  sdk: '^3.13.3'
 
 workspace:
   - gewerber_backend_commercial_client
