@@ -110,10 +110,16 @@ jobs:
         with:
           path: stubs
 
+      # Pinned to `develop`, not the default branch: `main` lags behind the
+      # release train, and the pre-#38/#39 code there still imports the module
+      # internals this repository's contract removed. The pairing that must hold
+      # is stubs `develop` <-> backend `develop` (and the same release cut on
+      # both `main`s).
       - name: Checkout the open-source consumer
         uses: actions/checkout@v7
         with:
           repository: Gewerber/gewerber-backend
+          ref: develop
           path: backend
 
       - uses: dart-lang/setup-dart@v1
