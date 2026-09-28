@@ -10,7 +10,21 @@ environment:
 resolution: workspace
 
 dependencies:
-  serverpod: 4.0.3
+  # Caret floor, not an exact pin: `^4.0.3` admits patch releases (4.0.4+)
+  # automatically while making a drop back to a pre-release such as
+  # `4.0.0-rc.1` structurally impossible -- a caret range never selects a
+  # pre-release, which is exactly what broke every `ref: main` consumer while
+  # this repo pinned rc.1. The generated code here is version-agnostic, and the
+  # codegen guard in .github/workflows/ci.yml activates serverpod_cli at the
+  # version pub actually resolved, not at this string.
+  #
+  # Known trade-off: `serverpod generate` warns that a version range "can cause
+  # a mismatch with Serverpod's CLI version" and prefers an exact pin. That is
+  # accepted deliberately -- CI cannot mismatch because it always activates the
+  # CLI at the pubspec.lock version, but a developer running an older global
+  # serverpod_cli against a newer resolved package can. When bumping Serverpod,
+  # run `dart pub global activate serverpod_cli <resolved version>` too.
+  serverpod: ^4.0.3
 
 dev_dependencies:
   lints: '>=3.0.0 <7.0.0'

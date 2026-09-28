@@ -71,13 +71,28 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
-      # The generator must be the version the packages depend on, otherwise a
+      # The generator must be the version pub actually resolved, otherwise a
       # codegen difference shows up as a false "drift" failure.
-      - name: Resolve the pinned Serverpod version
+      #
+      # Read the RESOLVED version out of pubspec.lock, not the constraint out
+      # of the pubspec. The constraint is a caret range (`^4.0.3`), and handing
+      # that string to `pub global activate` would activate whatever the
+      # newest 4.x happens to be at run time -- so a 4.0.4 CLI could generate
+      # artifacts the committed ones do not match. The lockfile is the only
+      # authoritative record of the version this build uses.
+      - name: Resolve the Serverpod version
         id: pin
         run: |
-          version="$(sed -nE 's/^  serverpod: (.*)$/\1/p' \
-            gewerber_backend_commercial_server/pubspec.yaml)"
+          version="$(awk '
+            /^  serverpod:$/ { hit = 1; next }
+            hit && /^    version:/ { gsub(/"/, "", $2); print $2; exit }
+            hit && /^  [a-zA-Z_]/ { exit }
+          ' pubspec.lock)"
+          if [ -z "$version" ]; then
+            echo "::error::could not read the resolved serverpod version from pubspec.lock"
+            exit 1
+          fi
+          echo "Activating serverpod_cli $version (resolved from pubspec.lock)"
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Install Serverpod CLI
@@ -143,11 +158,17 @@ jobs:
           cat backend/pubspec_overrides.yaml
 
       # The stubs and the OSS backend move Serverpod versions in lockstep
-      # (same release train). Until the backend lands its matching pin, align
-      # the cloned consumer's *every* Serverpod pin (prerelease, caret or
+      # (same release train). Until the backend lands its matching constraint,
+      # align the cloned consumer's *every* Serverpod pin (prerelease, caret or
       # exact) with this branch, so the cross-check exercises the pairing that
-      # will actually exist rather than a mixed state. Exact pins keep the
-      # whole release train on one version.
+      # will actually exist rather than a mixed state. `$sp` is copied over
+      # verbatim, so the consumer inherits the caret floor; matching ranges
+      # then resolve to the same version on both sides without pinning.
+      #
+      # The match must stay style-agnostic: it anchors on the bare key so it
+      # catches `4.0.0-rc.1`, `4.0.3` and `^4.0.3` alike. An earlier version
+      # of this step matched only exact `4\.0\.0-rc\.[0-9]+` and silently
+      # became dead code once consumers moved to carets.
       - name: Align consumer Serverpod pins with the stubs
         working-directory: backend
         run: |
