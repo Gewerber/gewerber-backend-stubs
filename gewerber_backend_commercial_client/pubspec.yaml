@@ -10,4 +10,6 @@ environment:
 resolution: workspace
 
 dependencies:
-  serverpod_client: 4.0.3
+  # Caret floor, kept in lockstep with gewerber_backend_commercial_server.
+  # See the comment there for why this is `^4.0.3` and not an exact pin.
+  serverpod_client: ^4.0.3
