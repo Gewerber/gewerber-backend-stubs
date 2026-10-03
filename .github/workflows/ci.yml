@@ -1,9 +1,33 @@
+# CI for the public stub packages of the closed `commercial` module.
+#
+#   - `analyze`     — the workspace must stay analyzable (`--fatal-infos`).
+#   - `codegen`     — `serverpod generate` must reproduce the committed
+#                     artifacts byte for byte. Drift here is invisible to
+#                     `analyze` because the artifacts *are* the contract that
+#                     open-source builds compile against.
+#   - `contract`    — `tool/check_public_contract.py` asserts the stubs expose
+#                     exactly the public contract and nothing of the closed
+#                     module's internals (symbols, tables, columns, endpoints).
+#   - `oss-consumer`— the open-source backend must still resolve and analyze
+#                     against *these* stubs. This is the only check that catches
+#                     a contract change breaking its consumer in the same round,
+#                     rather than weeks later on the consumer's CI.
+#
+# The stubs float on `ref: main` in the consumer's pubspec, so a merged change
+# here takes effect downstream immediately: run the consumer check *before*
+# merging, not after. No secrets and no private access are used anywhere — the
+# consumer repository is public, and the local stubs are injected through the
+# consumer's gitignored `pubspec_overrides.yaml`.
+
 name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
+  schedule:
+    # Catch upstream drift even when nothing changed in this repository.
+    - cron: '34 6 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -17,10 +41,147 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: stable
+          sdk: '3.13.3'
 
       - name: Install dependencies
         run: dart pub get
 
       - name: Analyze
         run: dart analyze --fatal-infos .
+
+  contract:
+    name: Public-contract guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Guard the public contract
+        run: python3 tool/check_public_contract.py --repo-root .
+
+  codegen:
+    name: Generated artifacts are reproducible
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.13.3'
+
+      - name: Install dependencies
+        run: dart pub get
+
+      # The generator must be the version pub actually resolved, otherwise a
+      # codegen difference shows up as a false "drift" failure.
+      #
+      # Read the RESOLVED version out of pubspec.lock, not the constraint out
+      # of the pubspec. The constraint is a caret range (`^4.0.3`), and handing
+      # that string to `pub global activate` would activate whatever the
+      # newest 4.x happens to be at run time -- so a 4.0.4 CLI could generate
+      # artifacts the committed ones do not match. The lockfile is the only
+      # authoritative record of the version this build uses.
+      - name: Resolve the Serverpod version
+        id: pin
+        run: |
+          version="$(awk '
+            /^  serverpod:$/ { hit = 1; next }
+            hit && /^    version:/ { gsub(/"/, "", $2); print $2; exit }
+            hit && /^  [a-zA-Z_]/ { exit }
+          ' pubspec.lock)"
+          if [ -z "$version" ]; then
+            echo "::error::could not read the resolved serverpod version from pubspec.lock"
+            exit 1
+          fi
+          echo "Activating serverpod_cli $version (resolved from pubspec.lock)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Install Serverpod CLI
+        run: dart pub global activate serverpod_cli "${{ steps.pin.outputs.version }}"
+
+      - name: Regenerate
+        working-directory: gewerber_backend_commercial_server
+        run: |
+          export PATH="$PATH:$HOME/.pub-cache/bin"
+          serverpod generate --force
+
+      - name: Fail on drift
+        run: |
+          if ! git diff --exit-code -- \
+              gewerber_backend_commercial_server/lib/src/generated \
+              gewerber_backend_commercial_client/lib/src/protocol; then
+            git status --short -- \
+              gewerber_backend_commercial_server/lib/src/generated \
+              gewerber_backend_commercial_client/lib/src/protocol
+            echo "::error::committed generated artifacts do not match 'serverpod generate'. Regenerate (see README 'Regenerating') and commit the result — hand-editing generated code or forgetting a model change both leak the closed module's shape to OSS builds."
+            exit 1
+          fi
+
+  oss-consumer:
+    name: OSS backend still builds against these stubs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout stubs
+        uses: actions/checkout@v7
+        with:
+          path: stubs
+
+      # Pinned to `develop`, not the default branch: `main` lags behind the
+      # release train, and the pre-#38/#39 code there still imports the module
+      # internals this repository's contract removed. The pairing that must hold
+      # is stubs `develop` <-> backend `develop` (and the same release cut on
+      # both `main`s).
+      - name: Checkout the open-source consumer
+        uses: actions/checkout@v7
+        with:
+          repository: Gewerber/gewerber-backend
+          ref: develop
+          path: backend
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.13.3'
+
+      # Replace the floating `ref: main` git dependencies with these working-tree
+      # packages, so the check exercises *this* commit rather than what main
+      # happened to publish. One file at the workspace root: the consumer is a
+      # Dart workspace, and pub rejects the same package being overridden in two
+      # member packages. The file is gitignored upstream.
+      - name: Point the consumer at these stubs
+        run: |
+          cat > backend/pubspec_overrides.yaml <<-EOF
+          	dependency_overrides:
+          	  gewerber_backend_commercial_server:
+          	    path: $GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_server
+          	  gewerber_backend_commercial_client:
+          	    path: $GITHUB_WORKSPACE/stubs/gewerber_backend_commercial_client
+          	EOF
+          cat backend/pubspec_overrides.yaml
+
+      # The stubs and the OSS backend move Serverpod versions in lockstep
+      # (same release train). Until the backend lands its matching constraint,
+      # align the cloned consumer's *every* Serverpod pin (prerelease, caret or
+      # exact) with this branch, so the cross-check exercises the pairing that
+      # will actually exist rather than a mixed state. `$sp` is copied over
+      # verbatim, so the consumer inherits the caret floor; matching ranges
+      # then resolve to the same version on both sides without pinning.
+      #
+      # The match must stay style-agnostic: it anchors on the bare key so it
+      # catches `4.0.0-rc.1`, `4.0.3` and `^4.0.3` alike. An earlier version
+      # of this step matched only exact `4\.0\.0-rc\.[0-9]+` and silently
+      # became dead code once consumers moved to carets.
+      - name: Align consumer Serverpod pins with the stubs
+        working-directory: backend
+        run: |
+          sp="$(sed -nE 's/^  serverpod: (.*)$/\1/p' \
+            ../stubs/gewerber_backend_commercial_server/pubspec.yaml)"
+          echo "aligning consumer to serverpod $sp"
+          grep -rlE 'serverpod[a-z_]*: ' --include=pubspec.yaml . | \
+            xargs -r sed -i -E "s#(serverpod[a-z_]*: )[^[:space:]].*#\1$sp#g"
+
+      - name: Install dependencies
+        working-directory: backend
+        run: dart pub get
+
+      - name: Analyze
+        working-directory: backend
+        run: dart analyze

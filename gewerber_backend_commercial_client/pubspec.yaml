@@ -5,9 +5,11 @@ publish_to: none
 repository: https://github.com/Gewerber/gewerber-backend-stubs
 
 environment:
-  sdk: '^3.12.0'
+  sdk: '^3.13.3'
 
 resolution: workspace
 
 dependencies:
-  serverpod_client: 4.0.0-rc.1
+  # Caret floor, kept in lockstep with gewerber_backend_commercial_server.
+  # See the comment there for why this is `^4.0.3` and not an exact pin.
+  serverpod_client: ^4.0.3

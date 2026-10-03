@@ -37,9 +37,37 @@ The stubs mirror exactly the public contract defined in `CONTRACT.md`
 (`Gewerber/gewerber-backend-commercial#19`): interface-level parity with the
 closed module's public types and call signatures. Stub internals are free and
 need not match the real implementation. Any contract change requires a
-same-round update of this repository (see the checklist in CONTRACT.md §6). CI
-here keeps the workspace analyzable; the open-source backend's CI validates
-resolution against these stubs.
+same-round update of this repository (see the checklist in CONTRACT.md §6).
+
+## CI guards
+
+`serverpod analyze` alone cannot protect this boundary, so CI adds three checks:
+
+- **`contract`** — `tool/check_public_contract.py` (run it locally before
+  pushing; it needs no toolchain beyond `python3`). Fails if the stubs
+  reintroduce module-internal vocabulary (`subscription`, `paypal`, `promo`,
+  `checkout`, `plan_tier`, `payment`) in any source, schema, or generated
+  artifact; create a `commercial_*` table outside the contract; widen or shrink
+  the exported endpoint surface (`commercial.status`, `waitlist.join`); or let
+  the committed migration drift from the columns the generated models declare.
+  The last check is the one that would have caught the missing waitlist
+  attribution fields: Serverpod folds *this* module's schema into each
+  consuming project's migration chain, so a stale artifact here silently
+  produces a wrong table there.
+- **`codegen`** — runs `serverpod generate --force` with the CLI version the
+  packages depend on and fails on any diff, so committed artifacts cannot drift
+  from the models or be hand-edited.
+- **`oss-consumer`** — checks out the open-source backend, injects *these*
+  working-tree stubs through its gitignored root `pubspec_overrides.yaml`, and
+  runs `dart pub get` + `dart analyze`. Because the consumer resolves this
+  repository at `ref: main`, a merged change lands downstream immediately:
+  this is what makes "the contract change breaks its consumer" a red CI on the
+  PR instead of a broken build on `main`. It also runs weekly to catch drift
+  from the consumer side.
+
+`README.md` notes under `lib/src/modules/` describing the *closed* modules'
+intended scope are deliberate boundary documentation and are not scanned for
+forbidden vocabulary; only code, schema, and generated artifacts are.
 
 ## Regenerating
 
