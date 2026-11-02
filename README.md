@@ -54,6 +54,11 @@ same-round update of this repository (see the checklist in CONTRACT.md §6).
   attribution fields: Serverpod folds *this* module's schema into each
   consuming project's migration chain, so a stale artifact here silently
   produces a wrong table there.
+  Two prose exemptions keep the plain-substring scan honest: comment lines in
+  `lib/src/billing` may say `payment`, and comment lines in the generated trees
+  may say `subscription` — Serverpod's repository boilerplate documents a Dart
+  stream subscription, which is the framework word, not the closed feature.
+  Code and identifiers are never exempt.
 - **`codegen`** — runs `serverpod generate --force` with the CLI version the
   packages depend on and fails on any diff, so committed artifacts cannot drift
   from the models or be hand-edited.
