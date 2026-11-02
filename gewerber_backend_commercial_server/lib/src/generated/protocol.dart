@@ -13,6 +13,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/protocol.dart' as _isp;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import 'modules/waitlist/models/join_waitlist_request.dart' as _igv3k488;
 import 'modules/waitlist/models/waitlist_entry.dart' as _igdqkb2n;
 import 'modules/waitlist/models/waitlist_exception.dart' as _ibplyxx4;
@@ -26,7 +27,8 @@ export 'modules/waitlist/models/waitlist_locale.dart';
 export 'modules/waitlist/models/waitlist_source.dart';
 export 'modules/waitlist/models/waitlist_status.dart';
 
-class Protocol extends _is.DatabaseSerializationManager {
+class Protocol extends _is.DatabaseSerializationManager
+    implements _is.DatabaseProtocolDeserializationProvider {
   Protocol._();
 
   factory Protocol() => _instance;
@@ -34,6 +36,36 @@ class Protocol extends _is.DatabaseSerializationManager {
   static final Protocol _instance = Protocol._();
 
   final Set<_is.SerializationManager> _hostProtocols = {};
+
+  @override
+  _is.ProtocolDeserialization get deserializationMetadata =>
+      _is.ProtocolDeserialization.cached(
+        this,
+        types: const [
+          _is.getType<_igv3k488.JoinWaitlistRequest>,
+          _is.getType<_igdqkb2n.WaitlistEntry>,
+          _is.getType<_ibplyxx4.WaitlistException>,
+          _is.getType<_i4uj41vo.WaitlistLocale>,
+          _is.getType<_i18l67d9.WaitlistSource>,
+          _is.getType<_ivebcceg.WaitlistStatus>,
+          _is.getType<_igv3k488.JoinWaitlistRequest?>,
+          _is.getType<_igdqkb2n.WaitlistEntry?>,
+          _is.getType<_ibplyxx4.WaitlistException?>,
+          _is.getType<_i4uj41vo.WaitlistLocale?>,
+          _is.getType<_i18l67d9.WaitlistSource?>,
+          _is.getType<_ivebcceg.WaitlistStatus?>,
+        ],
+        modules: const [_isp.Protocol.new],
+        classNames: const [
+          'JoinWaitlistRequest',
+          'WaitlistEntry',
+          'WaitlistException',
+          'WaitlistLocale',
+          'WaitlistSource',
+          'WaitlistStatus',
+        ],
+        classNamePrefix: 'gewerber_backend_commercial.',
+      );
 
   static List<_isp.TableDefinition> get targetTableDefinitions => [
     _isp.TableDefinition(
@@ -177,13 +209,11 @@ class Protocol extends _is.DatabaseSerializationManager {
     _hostProtocols.add(protocol);
   }
 
-  static String? getClassNameFromObjectJson(dynamic data) {
-    if (data is! Map) return null;
-    final className = data['__className__'] as String?;
-    if (className == null) return null;
-    if (!className.startsWith('gewerber_backend_commercial.')) return className;
-    return className.substring(28);
-  }
+  static String? getClassNameFromObjectJson(dynamic data) =>
+      _is.ProtocolDeserialization.normalizeClassName(
+        _is.ProtocolDeserialization.readClassName(data),
+        prefix: 'gewerber_backend_commercial.',
+      );
 
   @override
   T deserialize<T>(
@@ -191,8 +221,11 @@ class Protocol extends _is.DatabaseSerializationManager {
     Type? t,
   ]) {
     t ??= T;
-
-    final dataClassName = getClassNameFromObjectJson(data);
+    final rawDataClassName = _is.ProtocolDeserialization.readClassName(data);
+    final dataClassName = _is.ProtocolDeserialization.normalizeClassName(
+      rawDataClassName,
+      prefix: 'gewerber_backend_commercial.',
+    );
     if (dataClassName != null && dataClassName != getClassNameForType(t)) {
       try {
         return deserializeByClassName({
@@ -250,9 +283,16 @@ class Protocol extends _is.DatabaseSerializationManager {
       return (data != null ? _ivebcceg.WaitlistStatus.fromJson(data) : null)
           as T;
     }
-    try {
-      return _isp.Protocol().deserialize<T>(data, t);
-    } on _is.DeserializationTypeNotFoundException catch (_) {}
+    final modules = deserializationMetadata.modulesForDeserialization(
+      t,
+      className: rawDataClassName,
+    );
+    for (final module in modules) {
+      try {
+        return module.deserialize<T>(data, t);
+      } on _is.DeserializationTypeNotFoundException catch (_) {}
+    }
+
     return super.deserialize<T>(data, t);
   }
 
@@ -326,8 +366,10 @@ class Protocol extends _is.DatabaseSerializationManager {
       return deserialize<_ivebcceg.WaitlistStatus>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
-      data['className'] = dataClassName.substring(10);
-      return _isp.Protocol().deserializeByClassName(data);
+      return _isp.Protocol().deserializeByClassName({
+        ...data,
+        'className': dataClassName.substring(10),
+      });
     }
     return super.deserializeByClassName(data);
   }

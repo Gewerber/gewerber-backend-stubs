@@ -11,6 +11,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import '../../../modules/waitlist/models/waitlist_locale.dart' as _imzvqjwd;
 import '../../../modules/waitlist/models/waitlist_source.dart' as _i4nloxkl;
 import '../../../modules/waitlist/models/waitlist_status.dart' as _ilsh1rjc;
@@ -155,7 +156,7 @@ abstract class WaitlistEntry
     String? businessType,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
-    DateTime? invitedAt,
+    DateTime? invitedAt = const _isc.$UndefinedDateTime(),
   });
   @override
   Map<String, dynamic> toJson() {
@@ -273,7 +274,7 @@ class _WaitlistEntryImpl extends WaitlistEntry {
     Object? businessType = _Undefined,
     _ilsh1rjc.WaitlistStatus? status,
     DateTime? createdAt,
-    Object? invitedAt = _Undefined,
+    DateTime? invitedAt = const _isc.$UndefinedDateTime(),
   }) {
     return WaitlistEntry(
       id: id is int? ? id : this.id,
@@ -292,7 +293,9 @@ class _WaitlistEntryImpl extends WaitlistEntry {
       businessType: businessType is String? ? businessType : this.businessType,
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
-      invitedAt: invitedAt is DateTime? ? invitedAt : this.invitedAt,
+      invitedAt: invitedAt is _isc.UndefinedSentinel
+          ? this.invitedAt
+          : invitedAt,
     );
   }
 }
