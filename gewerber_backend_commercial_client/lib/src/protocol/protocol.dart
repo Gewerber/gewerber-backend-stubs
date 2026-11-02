@@ -12,6 +12,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _isc;
+
 import 'modules/waitlist/models/join_waitlist_request.dart' as _igv3k488;
 import 'modules/waitlist/models/waitlist_entry.dart' as _igdqkb2n;
 import 'modules/waitlist/models/waitlist_exception.dart' as _ibplyxx4;
@@ -26,7 +27,8 @@ export 'modules/waitlist/models/waitlist_source.dart';
 export 'modules/waitlist/models/waitlist_status.dart';
 export 'client.dart';
 
-class Protocol extends _isc.SerializationManager {
+class Protocol extends _isc.SerializationManager
+    implements _isc.ProtocolDeserializationProvider {
   Protocol._();
 
   factory Protocol() => _instance;
@@ -35,6 +37,36 @@ class Protocol extends _isc.SerializationManager {
 
   final Set<_isc.SerializationManager> _hostProtocols = {};
 
+  @override
+  _isc.ProtocolDeserialization get deserializationMetadata =>
+      _isc.ProtocolDeserialization.cached(
+        this,
+        types: const [
+          _isc.getType<_igv3k488.JoinWaitlistRequest>,
+          _isc.getType<_igdqkb2n.WaitlistEntry>,
+          _isc.getType<_ibplyxx4.WaitlistException>,
+          _isc.getType<_i4uj41vo.WaitlistLocale>,
+          _isc.getType<_i18l67d9.WaitlistSource>,
+          _isc.getType<_ivebcceg.WaitlistStatus>,
+          _isc.getType<_igv3k488.JoinWaitlistRequest?>,
+          _isc.getType<_igdqkb2n.WaitlistEntry?>,
+          _isc.getType<_ibplyxx4.WaitlistException?>,
+          _isc.getType<_i4uj41vo.WaitlistLocale?>,
+          _isc.getType<_i18l67d9.WaitlistSource?>,
+          _isc.getType<_ivebcceg.WaitlistStatus?>,
+        ],
+        modules: const [],
+        classNames: const [
+          'JoinWaitlistRequest',
+          'WaitlistEntry',
+          'WaitlistException',
+          'WaitlistLocale',
+          'WaitlistSource',
+          'WaitlistStatus',
+        ],
+        classNamePrefix: 'gewerber_backend_commercial.',
+      );
+
   void registerHostProtocol(
     String projectName,
     _isc.SerializationManager protocol,
@@ -42,13 +74,11 @@ class Protocol extends _isc.SerializationManager {
     _hostProtocols.add(protocol);
   }
 
-  static String? getClassNameFromObjectJson(dynamic data) {
-    if (data is! Map) return null;
-    final className = data['__className__'] as String?;
-    if (className == null) return null;
-    if (!className.startsWith('gewerber_backend_commercial.')) return className;
-    return className.substring(28);
-  }
+  static String? getClassNameFromObjectJson(dynamic data) =>
+      _isc.ProtocolDeserialization.normalizeClassName(
+        _isc.ProtocolDeserialization.readClassName(data),
+        prefix: 'gewerber_backend_commercial.',
+      );
 
   @override
   T deserialize<T>(
@@ -56,8 +86,11 @@ class Protocol extends _isc.SerializationManager {
     Type? t,
   ]) {
     t ??= T;
-
-    final dataClassName = getClassNameFromObjectJson(data);
+    final rawDataClassName = _isc.ProtocolDeserialization.readClassName(data);
+    final dataClassName = _isc.ProtocolDeserialization.normalizeClassName(
+      rawDataClassName,
+      prefix: 'gewerber_backend_commercial.',
+    );
     if (dataClassName != null && dataClassName != getClassNameForType(t)) {
       try {
         return deserializeByClassName({

@@ -13,6 +13,7 @@
 import 'package:gewerber_backend_commercial_server/src/generated/modules/waitlist/models/join_waitlist_request.dart'
     as _iiut8fxl;
 import 'package:serverpod/serverpod.dart' as _is;
+
 import '../endpoints/commercial_endpoint.dart' as _iel4lhgm;
 import '../modules/waitlist/endpoints/waitlist_endpoint.dart' as _im6fuw82;
 
