@@ -52,6 +52,12 @@ FORBIDDEN = (
 # is still held to the full forbid-list.
 PROSE_EXEMPTIONS = {
     'gewerber_backend_commercial_server/lib/src/billing': ('payment',),
+    # Serverpod's generated repository boilerplate documents a Dart stream
+    # subscription — the framework word, not the closed module's subscription
+    # feature. The scan is a plain substring match, so exempt that one term on
+    # comment lines in the generated trees only; identifiers and code stay
+    # fully scanned.
+    'gewerber_backend_commercial_server/lib/src/generated': ('subscription',),
 }
 
 # Tables the public contract owns.
