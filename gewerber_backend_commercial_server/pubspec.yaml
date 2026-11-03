@@ -10,7 +10,7 @@ environment:
 resolution: workspace
 
 dependencies:
-  # Caret floor, not an exact pin: `^4.0.3` admits patch releases (4.0.4+)
+  # Caret floor, not an exact pin: `^4.1.0` admits patch releases (4.1.1+)
   # automatically while making a drop back to a pre-release such as
   # `4.0.0-rc.1` structurally impossible -- a caret range never selects a
   # pre-release, which is exactly what broke every `ref: main` consumer while
@@ -24,7 +24,7 @@ dependencies:
   # CLI at the pubspec.lock version, but a developer running an older global
   # serverpod_cli against a newer resolved package can. When bumping Serverpod,
   # run `dart pub global activate serverpod_cli <resolved version>` too.
-  serverpod: ^4.0.3
+  serverpod: ^4.1.0
 
 dev_dependencies:
   lints: '>=3.0.0 <7.0.0'
