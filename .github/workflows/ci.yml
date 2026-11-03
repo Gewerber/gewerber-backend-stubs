@@ -5,7 +5,7 @@
 #                     artifacts byte for byte. Drift here is invisible to
 #                     `analyze` because the artifacts *are* the contract that
 #                     open-source builds compile against.
-#   - `contract`    — `tool/check_public_contract.py` asserts the stubs expose
+#   - `contract`    — `tool/check_public_contract.dart` asserts the stubs expose
 #                     exactly the public contract and nothing of the closed
 #                     module's internals (symbols, tables, columns, endpoints).
 #   - `oss-consumer`— the open-source backend must still resolve and analyze
@@ -55,8 +55,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # The guard is a pure-Dart script (dart:io + dart:convert only), so it
+      # needs the SDK but no `dart pub get`.
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.13.3'
+
       - name: Guard the public contract
-        run: python3 tool/check_public_contract.py --repo-root .
+        run: dart tool/check_public_contract.dart --repo-root .
 
   codegen:
     name: Generated artifacts are reproducible

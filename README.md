@@ -43,8 +43,8 @@ same-round update of this repository (see the checklist in CONTRACT.md §6).
 
 `serverpod analyze` alone cannot protect this boundary, so CI adds three checks:
 
-- **`contract`** — `tool/check_public_contract.py` (run it locally before
-  pushing; it needs no toolchain beyond `python3`). Fails if the stubs
+- **`contract`** — `tool/check_public_contract.dart` (run it locally before
+  pushing; it needs no toolchain beyond the Dart SDK). Fails if the stubs
   reintroduce module-internal vocabulary (`subscription`, `paypal`, `promo`,
   `checkout`, `plan_tier`, `payment`) in any source, schema, or generated
   artifact; create a `commercial_*` table outside the contract; widen or shrink
