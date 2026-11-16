@@ -67,7 +67,10 @@ class Protocol extends _is.DatabaseSerializationManager
         classNamePrefix: 'gewerber_backend_commercial.',
       );
 
-  static List<_isp.TableDefinition> get targetTableDefinitions => [
+  static List<_isp.TableDefinition> get targetTableDefinitions =>
+      _ownTableDefinitions;
+
+  static List<_isp.TableDefinition> get _ownTableDefinitions => [
     _isp.TableDefinition(
       name: 'commercial_waitlist_entry',
       dartName: 'WaitlistEntry',
@@ -451,6 +454,9 @@ class Protocol extends _is.DatabaseSerializationManager
   @override
   List<_isp.TableDefinition> getTargetTableDefinitions() =>
       targetTableDefinitions;
+
+  @override
+  List<_isp.TableDefinition> getOwnTableDefinitions() => _ownTableDefinitions;
 
   @override
   String getModuleName() => 'gewerber_backend_commercial';

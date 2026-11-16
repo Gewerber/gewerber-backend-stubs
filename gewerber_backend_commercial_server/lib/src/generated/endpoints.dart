@@ -20,6 +20,11 @@ import '../modules/waitlist/endpoints/waitlist_endpoint.dart' as _im6fuw82;
 class Endpoints extends _is.EndpointDispatch {
   @override
   void initializeEndpoints(_is.Server server) {
+    initializeOwnEndpoints(server);
+  }
+
+  @override
+  void initializeOwnEndpoints(_is.Server server) {
     var endpoints = <String, _is.Endpoint>{
       'commercial': _iel4lhgm.CommercialEndpoint()
         ..initialize(
