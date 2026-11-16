@@ -41,7 +41,7 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.13.3'
+          sdk: '3.14.0'
 
       - name: Install dependencies
         run: dart pub get
@@ -59,7 +59,7 @@ jobs:
       # needs the SDK but no `dart pub get`.
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.13.3'
+          sdk: '3.14.0'
 
       - name: Guard the public contract
         run: dart tool/check_public_contract.dart --repo-root .
@@ -72,7 +72,7 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.13.3'
+          sdk: '3.14.0'
 
       - name: Install dependencies
         run: dart pub get
@@ -145,7 +145,7 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.13.3'
+          sdk: '3.14.0'
 
       # Replace the floating `ref: main` git dependencies with these working-tree
       # packages, so the check exercises *this* commit rather than what main
